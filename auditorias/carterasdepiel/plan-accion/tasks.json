@@ -1,0 +1,647 @@
+[
+ {
+  "id": "dev-01",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Desbloquear JS y CSS en robots.txt",
+  "descripcion": "El robots.txt bloquea /themes/core.js, /themes/warehouse/assets/js/, /js/jquery/ y los JS de 25 módulos, además de Disallow: /modules/. Google no puede renderizar la página como la ve el usuario.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "30 min",
+  "pasos": [
+   "Descargar copia de seguridad del robots.txt actual.",
+   "Borrar el bloque completo «# Desautorización manual» (todas las líneas Disallow de /themes/, /js/ y /modules/…/js/).",
+   "Eliminar «Disallow: /modules/» y «Disallow: /es/modules/» del bloque de directorios.",
+   "Añadir «Allow: /modules/*.css» y «Allow: /modules/*.js» como red de seguridad.",
+   "Importante: PrestaShop regenera robots.txt al pulsar «Generar robots.txt» en Preferencias > Tráfico; documentar el cambio para que no se pierda.",
+   "Validar en Search Console > Inspección de URL > Probar URL publicada > Ver página probada (captura y recursos sin «bloqueado»)."
+  ],
+  "referencia": "Auditoría §3.1"
+ },
+ {
+  "id": "dev-02",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Resolver las categorías que dan 404",
+  "descripcion": "/28-cinturones, /42-, /43-, /57- (cinturones), /44-tarjeteros-de-piel (19 enlaces del blog), /44-tarjetero-de-piel, /47-carteras-mujer-casual y /74-76 (rebajas) devuelven 404. La hoja de estrategia sigue asignando keywords a varias de ellas.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "3 h",
+  "pasos": [
+   "Confirmar con el cliente si los cinturones siguen a la venta. Si sí: reactivar la categoría 28 y sus hijas (Catálogo > Categorías > activar) con sus productos.",
+   "Si no hay stock: crear redirecciones 301 (módulo de redirecciones o .htaccess/nginx): /28-cinturones y /42-, /43-, /57- → /27-complementos.",
+   "/44-tarjeteros-de-piel y /44-tarjetero-de-piel → 301 a la nueva categoría Tarjeteros (tarea seo-14) o, mientras tanto, a /73-carteras-hombre-piel-sin-monedero.",
+   "/47-carteras-mujer-casual → 301 a /26-carteras-mujer. /74-, /75-, /76- → 301 a /69-outlet.",
+   "Comprobar cada URL con curl -I: debe responder 301 en un solo salto hacia una URL 200."
+  ],
+  "referencia": "Auditoría §3.2"
+ },
+ {
+  "id": "dev-03",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Corregir el enlace global /37-casanova",
+  "descripcion": "Un enlace presente en 240 páginas (cabecera o menú) apunta a /37-casanova, que encadena dos 301 hasta la portada.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "30 min",
+  "pasos": [
+   "Localizar el enlace: buscar «37-casanova» en el megamenú (iqitmegamenu), Creative Elements y las plantillas del tema.",
+   "Sustituirlo por https://carterasdepiel.es/ (o por la categoría que corresponda).",
+   "Revisar las migas de pan: la ficha muestra «Inicio > Casanova > …»; si «Casanova» es la categoría raíz 37, cambiar la categoría por defecto de los productos a la subcategoría real.",
+   "Vaciar caché (Parámetros avanzados > Rendimiento) y comprobar con un rastreo que ninguna página enlaza ya a /37-casanova."
+  ],
+  "referencia": "Auditoría §3.2"
+ },
+ {
+  "id": "dev-04",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Rendimiento móvil, fase 1: reducir scripts y terceros",
+  "descripcion": "LCP móvil de 7,8 s (home), 15,4 s (categoría) y 10,7 s (ficha). Cada página carga 49 JS, más de 50 CSS y 58–76 peticiones a terceros.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "2 días",
+  "pasos": [
+   "Activar en Parámetros avanzados > Rendimiento: CCC para CSS y JS (combinar, comprimir, mover JS al final). Probar en staging; si algún módulo falla, excluirlo.",
+   "Eliminar una de las dos propiedades GA4 (G-ZX3C9R2LW2 / G-DYKLX95PJD): dejar solo la que esté en GTM.",
+   "Quitar el widget de Google Translate (translate_a/element.js).",
+   "Cargar WhatsApp, reCAPTCHA (solo en formularios), lottie-player e Instagram Lite bajo interacción o solo en las páginas que los usan.",
+   "Desactivar módulos que no se usan (iqitcompare si no se usa comparador, revsliderprestashop si se sustituye el slider).",
+   "Medir antes y después con PageSpeed Insights (móvil) en home, /38-carteras-hombre y una ficha. Objetivo fase 1: LCP < 4 s."
+  ],
+  "referencia": "Auditoría §3.6"
+ },
+ {
+  "id": "dev-05",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Optimizar la imagen principal (LCP) de portada y categorías",
+  "descripcion": "El LCP es el banner de Black Friday (JPEG 115 KB) en portada y la miniatura «thickbox» de 159 KB en categorías.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "4 h",
+  "pasos": [
+   "Sustituir Revolution Slider de la portada por una imagen estática responsive (<picture> con versión móvil y escritorio).",
+   "Añadir fetchpriority=\"high\" y <link rel=\"preload\" as=\"image\"> para la imagen del hero; quitar loading=lazy de esa imagen.",
+   "En el listado de productos (themes/warehouse/templates/catalog/_partials/miniatures/product.tpl) usar home_default o medium_default en lugar de thickbox_default.",
+   "Regenerar miniaturas (Diseño > Ajustes de imágenes) si se cambian tamaños.",
+   "Verificar con PageSpeed que el elemento LCP pesa menos de 60 KB."
+  ],
+  "referencia": "Auditoría §3.6 y §6"
+ },
+ {
+  "id": "dev-06",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Limpiar el sitemap XML",
+  "descripcion": "El sitemap tiene 180 entradas: 10 URLs técnicas (index.php?controller=…), 12 redirecciones, 7 errores 404, 2 noindex y /blog/news repetida 7 veces. Faltan unos 89 artículos del blog.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "3 h",
+  "pasos": [
+   "En el módulo Google Sitemap (gsitemap) desmarcar las páginas de módulos y controladores: index.php?controller=product/category/cms, módulos de pago, creativeelements, onepagecheckout, my-shopping-carts.",
+   "Excluir /fabricantes, /proveedores, /tiendas, /mapa-del-sitio y las CMS en noindex.",
+   "Generar el sitemap del blog con el propio ph_simpleblog (o un sitemap aparte) que incluya todos los posts, y añadirlo al índice.",
+   "Crear 301 de /sitemap.xml → /2_index_sitemap.xml.",
+   "Regenerar y enviar el índice en Search Console > Sitemaps. Comprobar que todas las URLs responden 200 e indexables."
+  ],
+  "referencia": "Auditoría §3.3"
+ },
+ {
+  "id": "dev-07",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Redirigir productos descatalogados con 301",
+  "descripcion": "Los productos descatalogados redirigen con 302 temporal a la categoría (Google lo trata como soft 404). Hay 12 en el sitemap.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "3 h",
+  "pasos": [
+   "En cada producto desactivado: Catálogo > Producto > SEO > «Redirección cuando el producto está desactivado» = 301 a producto.",
+   "Elegir como destino el producto sustituto más parecido (mismo modelo/tipo); si no existe, 301 a la subcategoría.",
+   "Para productos eliminados sin equivalente, devolver 410 vía módulo de redirecciones.",
+   "Lista inicial: 1115, 1125, 1126, 1135, 1158, 1159, 1160, 1161 y los que marque el rastreo (datos/baseline-crawl)."
+  ],
+  "referencia": "Auditoría §3.2"
+ },
+ {
+  "id": "dev-08",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Añadir canonical a la portada y 24 URLs",
+  "descripcion": "La portada, contacto, «Nuestra historia», más vendidos, novedades, promociones y páginas de sistema no declaran canonical.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "2 h",
+  "pasos": [
+   "En themes/warehouse/templates/_partials/head.tpl comprobar el bloque {block name='head_seo'}: añadir <link rel=\"canonical\" href=\"{$urls.current_url|regex_replace:'/\\?.*$/':''}\"> cuando $page.canonical esté vacío.",
+   "Para la portada forzar canonical https://carterasdepiel.es/.",
+   "Revisar que las páginas paginadas (?page=2) mantengan canonical autorreferente con su parámetro.",
+   "Validar con curl | grep canonical en las 25 URLs."
+  ],
+  "referencia": "Auditoría §3.4"
+ },
+ {
+  "id": "dev-09",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Completar el schema Product de las fichas",
+  "descripcion": "Product no tiene valoraciones (revi instalado pero sin aggregateRating), ni envíos ni devoluciones; la marca figura como «Santomar» y se duplica en JSON-LD y microdatos.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "6 h",
+  "pasos": [
+   "Eliminar los atributos itemprop/itemscope de Product y Offer en las plantillas del tema para dejar solo JSON-LD.",
+   "Ampliar el JSON-LD con: brand «Casanova», mpn = referencia, material, countryOfOrigin ES, aggregateRating y review (desde la API/hook del módulo revi).",
+   "Añadir offers.shippingDetails (gratis ≥ 20 € Península; tarifa real para pedidos menores y Baleares/Canarias) y hasMerchantReturnPolicy (30 días, devolución gratuita por correo).",
+   "Plantilla completa en ACTION-PLAN.md (bloque «JSON-LD Product»).",
+   "Validar 5 fichas en la Prueba de resultados enriquecidos y revisar Search Console > Fragmentos de productos / Fichas de comerciante."
+  ],
+  "referencia": "Auditoría §4"
+ },
+ {
+  "id": "dev-10",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Unificar el schema de empresa de la portada",
+  "descripcion": "Hay dos LeatherGoodsStore iguales y un Organization «Santomar» con @id y logo relativos; los datos de contacto no coinciden con los visibles.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "2 h",
+  "pasos": [
+   "Dejar un único bloque LeatherGoodsStore con @id https://carterasdepiel.es/#organization, name «Casanova», legalName (razón social), logo absoluto, foundingDate 1981, telephone y address únicos (los que decida la tarea seo-02).",
+   "Eliminar el Organization del tema o hacer que use el mismo @id.",
+   "Añadir sameAs completo (Facebook, Instagram, GBP).",
+   "Validar en validator.schema.org."
+  ],
+  "referencia": "Auditoría §4"
+ },
+ {
+  "id": "dev-11",
+  "tipo": "dev",
+  "prioridad": "alta",
+  "titulo": "Añadir cabeceras de seguridad",
+  "descripcion": "El servidor no envía HSTS, X-Content-Type-Options, X-Frame-Options ni Referrer-Policy.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "1 h",
+  "pasos": [
+   "En el server block de nginx añadir: add_header Strict-Transport-Security \"max-age=31536000; includeSubDomains\" always;",
+   "add_header X-Content-Type-Options nosniff always; add_header X-Frame-Options SAMEORIGIN always; add_header Referrer-Policy strict-origin-when-cross-origin always;",
+   "Recargar nginx y comprobar con curl -I https://carterasdepiel.es/.",
+   "Content-Security-Policy: dejar para más adelante en modo Report-Only, por el número de scripts de terceros."
+  ],
+  "referencia": "Auditoría §3.5"
+ },
+ {
+  "id": "dev-12",
+  "tipo": "dev",
+  "prioridad": "media",
+  "titulo": "Servir imágenes en WebP/AVIF con dimensiones y lazy",
+  "descripcion": "Todas las imágenes salen en JPEG/PNG, el 31 % no declara ancho/alto y solo 757 de 7.347 usan carga diferida.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "1 día",
+  "pasos": [
+   "Activar WebP nativo de PrestaShop 8 (Diseño > Ajustes de imágenes) o instalar un módulo WebP; alternativa nginx: servir .webp si existe y el navegador lo acepta.",
+   "Regenerar miniaturas.",
+   "Añadir width y height a <img> en miniaturas, galería y bloques de Creative Elements.",
+   "loading=\"lazy\" en todas las imágenes salvo la primera visible.",
+   "Comprobar con DevTools > Red que las imágenes se sirven como image/webp."
+  ],
+  "referencia": "Auditoría §6"
+ },
+ {
+  "id": "dev-13",
+  "tipo": "dev",
+  "prioridad": "media",
+  "titulo": "Texto alternativo correcto en la galería de producto",
+  "descripcion": "A partir de la 2.ª imagen de la galería el alt sale truncado («…») o vacío.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "3 h",
+  "pasos": [
+   "En la plantilla de la galería (product-cover-thumbnails.tpl) usar el legend de cada imagen sin truncar.",
+   "Si la imagen no tiene leyenda, generar alt = nombre del producto + color + «vista N».",
+   "Coordinar con el equipo SEO (tarea seo-09) para rellenar leyendas en las fichas prioritarias."
+  ],
+  "referencia": "Auditoría §6"
+ },
+ {
+  "id": "dev-14",
+  "tipo": "dev",
+  "prioridad": "media",
+  "titulo": "Corregir el schema y los H1 del blog",
+  "descripcion": "BlogPosting tiene el autor vacío, fechas «2024-05-06 14:29:43» (no ISO 8601) y wordCount erróneo. Los listados del blog muestran H1 en inglés («Blog - whats new?», «News»).",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "4 h",
+  "pasos": [
+   "En las plantillas de ph_simpleblog formatear datePublished/dateModified como ISO 8601 con zona (date('c')).",
+   "Calcular wordCount sobre el texto limpio del post.",
+   "Rellenar author como Person con name y url de la página de autor (tarea seo-10).",
+   "Cambiar los H1 de listado a español: «Blog de marroquinería y cuidado de la piel» y por categoría.",
+   "Reparar el JSON-LD inválido detectado en un post y validar con Rich Results Test."
+  ],
+  "referencia": "Auditoría §4 y §5"
+ },
+ {
+  "id": "dev-15",
+  "tipo": "dev",
+  "prioridad": "media",
+  "titulo": "Permitir zoom y agrandar elementos táctiles",
+  "descripcion": "El viewport bloquea el zoom (user-scalable=no, maximum-scale=1) y hay entre 34 y 83 enlaces o botones de menos de 24 px.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "2 h",
+  "pasos": [
+   "Cambiar el meta viewport a: width=device-width, initial-scale=1.",
+   "Aumentar a mínimo 24×24 px (ideal 44 px) el área táctil de iconos del pie, filtros y paginación.",
+   "Revisar en móvil real que el menú y el carrito siguen funcionando."
+  ],
+  "referencia": "Auditoría §3"
+ },
+ {
+  "id": "dev-16",
+  "tipo": "dev",
+  "prioridad": "media",
+  "titulo": "Reducir el tiempo de respuesta del servidor (TTFB)",
+  "descripcion": "El TTFB está entre 0,9 y 1,3 s y el HTML se sirve con Cache-Control: no-store.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "1 día",
+  "pasos": [
+   "Verificar OPcache activo y PHP 8.1+.",
+   "Activar caché de Smarty y caché de PrestaShop (Memcached/Redis si el hosting lo permite).",
+   "Valorar un módulo de caché de página completa para visitantes no logueados.",
+   "Medir TTFB antes/después con curl -w %{time_starttransfer}. Objetivo < 0,6 s."
+  ],
+  "referencia": "Auditoría §3.5"
+ },
+ {
+  "id": "dev-17",
+  "tipo": "dev",
+  "prioridad": "baja",
+  "titulo": "Quitar meta keywords y meta robots duplicada",
+  "descripcion": "La cabecera incluye meta keywords (obsoleta) y dos etiquetas meta robots separadas («index» y «follow»).",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "30 min",
+  "pasos": [
+   "En head.tpl eliminar la línea de meta keywords.",
+   "Unificar en una sola etiqueta: <meta name=\"robots\" content=\"index,follow\"> (o noindex donde aplique)."
+  ],
+  "referencia": "Auditoría §11"
+ },
+ {
+  "id": "dev-18",
+  "tipo": "dev",
+  "prioridad": "baja",
+  "titulo": "noindex en páginas de sistema vacías",
+  "descripcion": "/fabricantes, /proveedores, /tiendas y /mapa-del-sitio son indexables con 1–37 palabras.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "1 h",
+  "pasos": [
+   "Desactivar en Preferencias las páginas de fabricantes, proveedores y tiendas si no se usan.",
+   "Si deben existir, añadir meta robots noindex,follow en sus controladores.",
+   "Quitarlas del sitemap (relacionado con dev-06)."
+  ],
+  "referencia": "Auditoría §3.3"
+ },
+ {
+  "id": "dev-19",
+  "tipo": "dev",
+  "prioridad": "baja",
+  "titulo": "Instalar IndexNow",
+  "descripcion": "Avisar automáticamente a Bing y otros buscadores de las URLs nuevas o modificadas.",
+  "responsable": "Programador PrestaShop",
+  "tiempo": "1 h",
+  "pasos": [
+   "Instalar un módulo IndexNow para PrestaShop o generar la clave y alojar el .txt en la raíz.",
+   "Enviar notificaciones en altas y cambios de productos, categorías y posts.",
+   "Dar de alta el sitio en Bing Webmaster Tools y comprobar las URLs recibidas."
+  ],
+  "referencia": "Auditoría §11"
+ },
+ {
+  "id": "seo-01",
+  "tipo": "seo",
+  "prioridad": "alta",
+  "titulo": "Desautorizar los enlaces spam",
+  "descripcion": "130 de 200 enlaces muestreados son spam (111 de la red *.slots-online-machine.online y 19 de casinos, farmacia y PBN), casi todos de octubre y noviembre de 2026.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "2 h",
+  "pasos": [
+   "Exportar desde DinoRANK > Linkbuilding todos los dominios entrantes.",
+   "Marcar como tóxicos: slots-online-machine.online (y variantes truncadas), dominios de casino, farmacia, cannabis, «backlinks/seo» y PBN.",
+   "Crear disavow.txt con una línea «domain:xxx» por dominio.",
+   "Subirlo en Search Console > Herramienta para desautorizar enlaces.",
+   "Revisar cada semana los enlaces nuevos durante 2 meses y ampliar el archivo si sigue la oleada."
+  ],
+  "referencia": "Auditoría §2"
+ },
+ {
+  "id": "seo-02",
+  "tipo": "seo",
+  "prioridad": "alta",
+  "titulo": "Unificar nombre, dirección y teléfono de la marca",
+  "descripcion": "Conviven «Santomar» y «Casanova», dos teléfonos (+34 956 46 09 92 en schema y +34 956 71 60 67 en contacto), dos ubicaciones (Ubrique / El Bosque) y «más de 40» y «más de 50 años».",
+  "responsable": "Cliente (Casanova) + Equipo SEO",
+  "tiempo": "3 h",
+  "pasos": [
+   "Reunión con el cliente para fijar: nombre público (Casanova), razón social (Santomar), teléfono único, dirección real del taller y año de fundación (1981).",
+   "Actualizar con esos datos: página de contacto, pie de página, aviso legal, «Nuestra historia», textos de la portada y llms.txt.",
+   "Pasar los datos al programador para el schema (dev-10).",
+   "Revisar y corregir la ficha de Google Business Profile, Facebook, Instagram y directorios (proveedores.com, etc.)."
+  ],
+  "referencia": "Auditoría §4 y §7"
+ },
+ {
+  "id": "seo-03",
+  "tipo": "seo",
+  "prioridad": "alta",
+  "titulo": "Reasignar en la hoja de estrategia las keywords de URLs muertas",
+  "descripcion": "La hoja «Estrategia SEO Santomar» asigna keywords a URLs que hoy dan 404 o redirigen: /47-carteras-mujer-casual, /44-tarjetero-de-piel, /28-cinturones, /57-cinturon-hombre-traje, /45-monederos-de-piel, /79-carteras-mujer-piel-grandes, /2-inicio.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "3 h",
+  "pasos": [
+   "Pestaña «Cartera Mujer»: mover «monederos de piel mujer», «carteras mujer piel ubrique», «monedero de cuero mujer» y «billeteros señora» de /47 a /26-carteras-mujer; las de grandes a /79-carteras-grandes-de-mujer.",
+   "Pestaña «Complementos»: tarjeteros → nueva categoría Tarjeteros (seo-14); monederos → /45-monederos-de-piel-con-cremalleras.",
+   "Pestaña «Cinturones»: dejar en espera hasta que el cliente confirme si se reactiva la categoría (dev-02).",
+   "Pestaña «inicio-2»: cambiar /2-inicio por https://carterasdepiel.es/.",
+   "Pestaña «Enlazado interno»: revisar que cada anchor apunte a una URL 200.",
+   "Añadir columna «Posición SerpReports nov-2026» con los datos del export para medir la evolución."
+  ],
+  "referencia": "Hoja de estrategia + SerpReports"
+ },
+ {
+  "id": "seo-04",
+  "tipo": "seo",
+  "prioridad": "alta",
+  "titulo": "Corregir los 50 enlaces rotos del blog",
+  "descripcion": "50 URLs en 404 reciben enlaces internos, casi todas desde artículos del blog hacia productos descatalogados.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "4 h",
+  "pasos": [
+   "Abrir el listado de 404 con enlaces internos (datos/baseline-crawl-2026-11-23.json o un rastreo con Screaming Frog).",
+   "Priorizar los artículos con tráfico: piel de vacuno vs ovino, hebillas de cinturones, tarjeteros minimalistas, últimas novedades en carteras de hombre, protección RFID.",
+   "Sustituir cada enlace por el producto vigente equivalente o por su categoría.",
+   "Los 19 enlaces a /44-tarjeteros-de-piel: cambiarlos a la nueva categoría de tarjeteros.",
+   "Volver a rastrear y confirmar 0 enlaces internos a 404."
+  ],
+  "referencia": "Auditoría §3.2"
+ },
+ {
+  "id": "seo-05",
+  "tipo": "seo",
+  "prioridad": "alta",
+  "titulo": "Resolver la canibalización entre portada y categorías",
+  "descripcion": "SerpReports muestra la portada posicionando para búsquedas de categoría: «carteras hombre» (22.200/mes, pos. 16), «carteras piel hombre» (3.600, pos. 15), «carteras pequeñas hombre» (880, pos. 12), «carteras piel mujer» (1.600, pos. 9), «monedero grande mujer» (390, pos. 11). Search Console registra 38 consultas en conflicto portada–categoría.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "1 día",
+  "pasos": [
+   "Definir la URL objetivo de cada keyword: hombre → /38-carteras-hombre; mujer → /26-carteras-mujer; pequeñas → /77 o /82; grandes → /79.",
+   "Desoptimizar la portada: title y H1 orientados a marca + «fábrica de carteras de piel de Ubrique», sin repetir «carteras de piel hombre/mujer».",
+   "Añadir en la portada bloques con enlaces de anchor exacto hacia /38 y /26.",
+   "Enlazar desde 5–10 posts del blog a la categoría objetivo con el anchor de la keyword.",
+   "Revisar en 4 semanas en SerpReports que la URL posicionada cambia a la categoría."
+  ],
+  "referencia": "SerpReports + Auditoría §5.2"
+ },
+ {
+  "id": "seo-06",
+  "tipo": "seo",
+  "prioridad": "alta",
+  "titulo": "Reescribir titles y meta descriptions",
+  "descripcion": "91 de 241 titles superan 60 caracteres, 21 páginas no tienen meta description y las fichas usan «【 】▷» y «lll➤». CTR medio del 0,8 %.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "1 día",
+  "pasos": [
+   "Categorías (14): title «{Keyword principal} | Hechas en Ubrique – Casanova» (máx. 60), meta de 140–155 caracteres con beneficio + envío gratis.",
+   "Fichas: plantilla «{Tipo} de piel {para hombre/mujer} {MODELO} – {Color} | Casanova».",
+   "Quitar «【 】▷», «lll➤» y emojis.",
+   "Empezar por las 20 URLs con más impresiones en Search Console (home, /38, /26, /79, /77, /69).",
+   "Anotar fecha del cambio y medir CTR a 28 días en Search Console."
+  ],
+  "referencia": "Auditoría §5.1"
+ },
+ {
+  "id": "seo-07",
+  "tipo": "seo",
+  "prioridad": "alta",
+  "titulo": "Empujar las keywords cercanas al top 3",
+  "descripcion": "Según SerpReports hay búsquedas de alto volumen a un paso: «carteras piel mujer» (1.600, pos. 9), «carteras grandes mujer» (880, pos. 11), «mini cartera hombre» (320, pos. 11), «carteras mujer grandes» (720, pos. 12), «carteras de cuero» (480, pos. 7), «carteras de piel para hombre» (140, pos. 4).",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "2 días",
+  "pasos": [
+   "Para cada keyword confirmar la URL objetivo (tras seo-05).",
+   "Revisar la intención en Google y comparar con los 3 primeros (longitud, secciones, filtros, FAQ).",
+   "Ampliar el texto de la categoría con la keyword en H2 y una sección de preguntas frecuentes.",
+   "Añadir 3–5 enlaces internos con anchor exacto desde posts y categorías hermanas.",
+   "Seguimiento semanal en SerpReports; objetivo top 3 en 8 semanas."
+  ],
+  "referencia": "SerpReports"
+ },
+ {
+  "id": "seo-08",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Optimizar /26-carteras-mujer según el brief",
+  "descripcion": "Objetivo: «carteras mujer» (14.800, pos. 25), «monederos mujer» (12.100, pos. 29), «cartera mujer pequeña» (1.600, pos. 30 en SerpReports), «carteras de piel de mujer» (590, pos. 20).",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "1 día",
+  "pasos": [
+   "Title: «Carteras y Monederos de Piel para Mujer | Hechos en Ubrique – Casanova». H1: «Carteras de piel para mujer».",
+   "Intro de 120 palabras sobre la parrilla.",
+   "Bloque inferior de 600–800 palabras: cómo elegir el tamaño, piel de vacuno de Ubrique, RFID, cuidados, 4 preguntas frecuentes.",
+   "Enlaces a /77, /78 y /79 y al post de cuidado del cuero.",
+   "Referencias: pielini.com/es/17-carteras-mujer y pieldeubrique.com/65-billeteras-de-senora-carteras-mujer."
+  ],
+  "referencia": "ACTION-PLAN · Brief"
+ },
+ {
+  "id": "seo-09",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Ampliar fichas cortas y fusionar duplicadas",
+  "descripcion": "24 de 60 fichas tienen menos de 300 palabras y hay modelos duplicados con IDs distintos (BENITO 1123/1155, CUBE 1138/1143, PANA 1110/1165). SerpReports muestra fichas posicionando para búsquedas de categoría («tarjetero piel hombre» → ficha PANA; «carteras de piel hombre» → ficha FLORENCIA).",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "3 días",
+  "pasos": [
+   "Decidir con el cliente qué ficha duplicada se conserva; pedir al programador 301 de la otra.",
+   "Plantilla de ficha: uso ideal, medidas y capacidad, materiales, RFID, diferencias con modelos hermanos, cuidados, 3 preguntas frecuentes.",
+   "Escribir leyendas de imagen (alt) por color y vista.",
+   "Empezar por las fichas con impresiones en Search Console (200 CLASSIC, 349 CLASSIC, 1099 FLORENZIA, 1108 PANA, 1101 FLORENCIA)."
+  ],
+  "referencia": "Auditoría §5.3"
+ },
+ {
+  "id": "seo-10",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Crear la página de autor del blog",
+  "descripcion": "El blog se publica sin autor. «Nuestra historia» (Miguel, taller familiar desde 1981) es el mayor activo de confianza y no se aprovecha.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "4 h",
+  "pasos": [
+   "Redactar la bio de Miguel: oficio, años en el taller, especialidad.",
+   "Crear la página de autor (CMS) con foto real del taller.",
+   "Asignar el autor a todos los posts y mostrar firma con enlace a la bio.",
+   "Pasar la URL al programador para el schema Person (dev-14)."
+  ],
+  "referencia": "Auditoría §7"
+ },
+ {
+  "id": "seo-11",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Reorganizar el blog en grupos temáticos",
+  "descripcion": "Más de 150 posts con temas solapados (5 sobre RFID, varios sobre cuidado e hidratación del cuero) y otros alejados del catálogo.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "2 días",
+  "pasos": [
+   "Agrupar posts en: Cuidado del cuero, Tipos de piel, RFID, Guías de compra hombre, Guías de compra mujer, Regalos, Ubrique y artesanía.",
+   "Elegir un post pilar por grupo (p. ej. «piel de vacuno vs ovino», 49 clics/mes).",
+   "Fusionar duplicados en el pilar y pedir 301 de los fusionados.",
+   "Enlazar cada post del grupo al pilar y el pilar a la categoría de producto.",
+   "Decidir qué hacer con posts fuera de catálogo (sandalias, bolsos): actualizar, noindex o eliminar."
+  ],
+  "referencia": "Auditoría §5.3 y §10"
+ },
+ {
+  "id": "seo-12",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Completar la página de contacto",
+  "descripcion": "La página de contacto tiene 29 palabras, sin dirección ni horario.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "2 h",
+  "pasos": [
+   "Añadir dirección del taller, teléfono único, email, horario y CIF (datos de seo-02).",
+   "Texto breve sobre venta al por mayor y visitas al taller.",
+   "Enlace a la ficha de Google Business Profile y a «Nuestra historia»."
+  ],
+  "referencia": "Auditoría §7"
+ },
+ {
+  "id": "seo-13",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Decidir qué hacer con las landings en noindex",
+  "descripcion": "/content/8 a /content/13 («Billeteros de piel», «Carteras de piel baratas», «para hombre», «para mujer»…) existen pero no se indexan.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "2 h",
+  "pasos": [
+   "Leer cada landing y compararla con la categoría equivalente.",
+   "Si duplica la categoría: pedir 301 a la categoría y mover el texto útil a ella.",
+   "Si aporta un ángulo distinto (p. ej. «baratas», «al por mayor»): quitar noindex, optimizar y enlazar desde el menú o el pie."
+  ],
+  "referencia": "Auditoría §3.4"
+ },
+ {
+  "id": "seo-14",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Crear la categoría Tarjeteros de piel",
+  "descripcion": "«tarjeteros hombre» suma 6.600 búsquedas/mes (pielini en pos. 6) y la antigua categoría de tarjeteros da 404. SerpReports: «tarjeteros de piel» pos. 28 con una ficha.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "1 día",
+  "pasos": [
+   "Pedir al programador que cree la categoría (o reactive la 44) con URL /tarjeteros-de-piel.",
+   "Asignar los productos tipo tarjetero y cartera americana tarjetero.",
+   "Escribir title, meta, intro y texto inferior (500–700 palabras) con «tarjeteros de piel», «tarjetero piel hombre», «tarjetero de cuero».",
+   "Redirigir /44-tarjeteros-de-piel a la nueva URL y actualizar la hoja de estrategia."
+  ],
+  "referencia": "Content gap"
+ },
+ {
+  "id": "seo-15",
+  "tipo": "seo",
+  "prioridad": "media",
+  "titulo": "Activar la captación de reseñas",
+  "descripcion": "El módulo revi está instalado pero no aparecen valoraciones en Google ni reseñas externas de la marca.",
+  "responsable": "Cliente (Casanova) + Equipo SEO",
+  "tiempo": "2 h",
+  "pasos": [
+   "Configurar en revi el email automático de solicitud de reseña 7–10 días tras la entrega.",
+   "Activar Google Customer Reviews en Merchant Center.",
+   "Pedir reseña en Google Business Profile en el email de envío.",
+   "Objetivo: 100 reseñas en 6 meses. Responder todas."
+  ],
+  "referencia": "Auditoría §7"
+ },
+ {
+  "id": "seo-16",
+  "tipo": "seo",
+  "prioridad": "baja",
+  "titulo": "Actualizar el llms.txt",
+  "descripcion": "El llms.txt enlaza /28-cinturones (404) e incluye una lista de unas 70 palabras clave.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "1 h",
+  "pasos": [
+   "Quitar la sección «Palabras clave objetivo».",
+   "Sustituir enlaces muertos por URLs vigentes.",
+   "Añadir secciones «Sobre el fabricante» (1981, El Bosque/Ubrique), «Envíos y devoluciones» y «Guías destacadas»."
+  ],
+  "referencia": "Auditoría §8"
+ },
+ {
+  "id": "seo-17",
+  "tipo": "seo",
+  "prioridad": "baja",
+  "titulo": "Crear una imagen social de marca",
+  "descripcion": "La imagen que se muestra al compartir la web (og:image) es el logotipo en JPEG de 5,8 KB.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "2 h",
+  "pasos": [
+   "Diseñar una imagen 1200×630 con producto y taller.",
+   "Pasarla al programador para og:image de portada y por defecto.",
+   "Revisar la vista previa en el depurador de Facebook y LinkedIn Post Inspector."
+  ],
+  "referencia": "Auditoría §6"
+ },
+ {
+  "id": "seo-18",
+  "tipo": "seo",
+  "prioridad": "baja",
+  "titulo": "Conseguir menciones y enlaces locales",
+  "descripcion": "El perfil legítimo de enlaces es muy pequeño y no hay menciones externas de la marca.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "4 h/mes",
+  "pasos": [
+   "Contactar con la Asociación de la Piel de Ubrique y el Museo de la Piel para aparecer en sus directorios.",
+   "Proponer una noticia a la prensa local (Diario de Cádiz, Europa Sur) sobre el taller familiar desde 1981.",
+   "Alta en directorios de artesanía andaluza y de fabricantes.",
+   "Registrar cada enlace conseguido en la hoja de estrategia."
+  ],
+  "referencia": "Auditoría §2 y §8"
+ },
+ {
+  "id": "seo-19",
+  "tipo": "seo",
+  "prioridad": "baja",
+  "titulo": "Monitorizar la presencia en asistentes de IA",
+  "descripcion": "DinoRANK no tiene prompts de IA configurados para el dominio.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "1 h",
+  "pasos": [
+   "Configurar en DinoRANK > LLMs prompts como «mejores carteras de piel de Ubrique», «dónde comprar cartera de piel hecha en España», «fábrica de carteras de piel en Cádiz».",
+   "Revisar mensualmente si la marca aparece y qué fuentes citan."
+  ],
+  "referencia": "Auditoría §8"
+ },
+ {
+  "id": "seo-20",
+  "tipo": "seo",
+  "prioridad": "baja",
+  "titulo": "Estudiar una línea de carteras personalizadas",
+  "descripcion": "Los dos líderes venden carteras con grabado: «carteras personalizadas» (1.000/mes) y «cartera hombre personalizada» (880). Requiere decisión de negocio.",
+  "responsable": "Cliente (Casanova) + Equipo SEO",
+  "tiempo": "2 h (estudio)",
+  "pasos": [
+   "Presentar al cliente volumen de búsqueda y competidores (pieldeubrique, monpiel).",
+   "Si se aprueba: definir productos, precio y proceso de grabado.",
+   "Planificar la categoría y su contenido como en seo-14."
+  ],
+  "referencia": "Content gap"
+ },
+ {
+  "id": "seo-21",
+  "tipo": "seo",
+  "prioridad": "baja",
+  "titulo": "Seguimiento mensual de posiciones y re-auditoría",
+  "descripcion": "Medir el efecto del plan sobre las keywords de SerpReports y la hoja de estrategia.",
+  "responsable": "Equipo SEO (Infosama)",
+  "tiempo": "2 h/mes",
+  "pasos": [
+   "Exportar SerpReports cada mes y actualizar la columna de posición en la hoja.",
+   "Revisar en Search Console clics, CTR y posición de las 20 URLs principales.",
+   "A los 90 días repetir el rastreo completo y comparar con datos/baseline-crawl-2026-11-23.json."
+  ],
+  "referencia": "Seguimiento"
+ }
+]

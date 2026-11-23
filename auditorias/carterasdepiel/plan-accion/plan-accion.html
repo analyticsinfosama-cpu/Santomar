@@ -1,0 +1,309 @@
+<title>Plan SEO carterasdepiel.es</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: tablero de una columna; cabecera con progreso, pestañas SEO / Programador, carriles por prioridad con tarjetas desplegables */
+:root {
+  --bg: #f4f7f8;
+  --paper: #ffffff;
+  --fg: #22292d;
+  --muted: #5d676d;
+  --line: #dbe3e7;
+  --soft: #eaf1f4;
+  --accent: #3b7d9c;
+  --accent-2: #86bf4c;
+  --alta: #b8382a; --alta-bg: #fbeceb;
+  --media: #a86a10; --media-bg: #fbf2e2;
+  --baja: #4d7d22; --baja-bg: #edf6e3;
+  --st-pend: #6a737a; --st-pend-bg: #eef1f3;
+  --st-proc: #2f6f9e; --st-proc-bg: #e4f0f8;
+  --st-done: #3f7a1f; --st-done-bg: #e6f3da;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12181b; --paper: #1a2226; --fg: #e5eaed; --muted: #a0abb1; --line: #2c383e; --soft: #1f2c33;
+    --accent: #7ab7d4; --accent-2: #a4d76c;
+    --alta: #f08a7e; --alta-bg: #3a2120; --media: #e6b45f; --media-bg: #382c19; --baja: #a4d76c; --baja-bg: #22311a;
+    --st-pend: #b3bcc1; --st-pend-bg: #263137; --st-proc: #84c1e6; --st-proc-bg: #1b3040; --st-done: #a4d76c; --st-done-bg: #22331a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12181b; --paper: #1a2226; --fg: #e5eaed; --muted: #a0abb1; --line: #2c383e; --soft: #1f2c33;
+  --accent: #7ab7d4; --accent-2: #a4d76c;
+  --alta: #f08a7e; --alta-bg: #3a2120; --media: #e6b45f; --media-bg: #382c19; --baja: #a4d76c; --baja-bg: #22311a;
+  --st-pend: #b3bcc1; --st-pend-bg: #263137; --st-proc: #84c1e6; --st-proc-bg: #1b3040; --st-done: #a4d76c; --st-done-bg: #22331a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.7rem, 4.5vw, 2.4rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0; max-width: 68ch; }
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 12px; }
+.sum { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; min-width: 0; }
+.sum .k { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 600; }
+.sum .v { font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; font-variant-numeric: tabular-nums; line-height: 1; }
+.sum .v small { font-size: .9rem; color: var(--muted); font-weight: 600; }
+.meter { height: 8px; border-radius: 4px; background: var(--soft); overflow: hidden; display: flex; }
+.meter span { display: block; height: 100%; }
+.m-done { background: var(--st-done); } .m-proc { background: var(--st-proc); }
+.sum .legend { font-size: 12.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; font-variant-numeric: tabular-nums; }
+.notice { font-size: 13.5px; border-radius: 8px; padding: 10px 14px; background: var(--soft); color: var(--muted); }
+.tabs { display: flex; gap: 6px; border-bottom: 2px solid var(--line); flex-wrap: wrap; }
+.tab { appearance: none; border: 0; background: none; font: inherit; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--muted); padding: 10px 14px; border-bottom: 3px solid transparent; margin-bottom: -2px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent-2); }
+.tab .count { font-family: var(--font-body); font-size: 12px; font-weight: 600; background: var(--soft); color: var(--muted); border-radius: 999px; padding: 1px 8px; }
+.tab:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13.5px; color: var(--muted); }
+.chip { appearance: none; font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--paper); color: var(--fg); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+.lane { display: grid; gap: 10px; }
+.lane h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; margin: 10px 0 0; display: flex; align-items: center; gap: 10px; }
+.lane h2 .n { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 500; }
+.prio { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 3px 10px; border-radius: 999px; }
+.p-alta { color: var(--alta); background: var(--alta-bg); } .p-media { color: var(--media); background: var(--media-bg); } .p-baja { color: var(--baja); background: var(--baja-bg); }
+.card { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 10px; min-width: 0; }
+.card.alta { border-left-color: var(--alta); } .card.media { border-left-color: var(--media); } .card.baja { border-left-color: var(--baja); }
+.card.done { opacity: .72; }
+.card.done h3 { text-decoration: line-through; text-decoration-color: var(--muted); }
+.top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 16px; align-items: start; }
+@media (max-width: 560px) { .top { grid-template-columns: minmax(0, 1fr); } }
+h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; line-height: 1.3; margin: 0; text-wrap: balance; }
+.id { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 6px; font-family: var(--font-body); font-weight: 600; }
+.desc { margin: 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; color: var(--muted); }
+.meta b { color: var(--fg); font-weight: 600; }
+.status { display: grid; gap: 4px; justify-items: end; }
+@media (max-width: 560px) { .status { justify-items: start; } }
+select.st { font: inherit; font-size: 13.5px; font-weight: 600; border-radius: 8px; padding: 6px 30px 6px 10px; border: 1px solid var(--line); cursor: pointer; min-width: 150px; }
+select.st[data-v="pendiente"] { color: var(--st-pend); background-color: var(--st-pend-bg); }
+select.st[data-v="proceso"] { color: var(--st-proc); background-color: var(--st-proc-bg); }
+select.st[data-v="completada"] { color: var(--st-done); background-color: var(--st-done-bg); }
+select.st:disabled { cursor: not-allowed; opacity: .8; }
+.who { font-size: 12px; color: var(--muted); text-align: right; }
+details { border-top: 1px solid var(--line); padding-top: 8px; }
+summary { cursor: pointer; font-weight: 600; color: var(--accent); font-size: 14px; }
+ol.steps { margin: 10px 0 2px; padding-left: 22px; display: grid; gap: 6px; }
+ol.steps li { padding-left: 4px; }
+ol.steps li::marker { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.ref { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.empty { color: var(--muted); font-size: 14px; padding: 10px 2px; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+@media (prefers-reduced-motion: no-preference) { .card { transition: opacity .2s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Infosama · Plan de acción SEO</div>
+    <h1>carterasdepiel.es</h1>
+    <p class="sub">Tareas derivadas de la auditoría del 23/11/2026, la hoja «Estrategia SEO Santomar» y las posiciones de SerpReports. Cambia el estado de cada tarea; el cambio se guarda para todo el equipo.</p>
+  </header>
+
+  <section class="summary" aria-label="Progreso">
+    <div class="sum"><span class="k">Total</span><span class="v" id="s-all">–</span><div class="meter" id="m-all"></div><span class="legend" id="l-all"></span></div>
+    <div class="sum"><span class="k">Tareas SEO</span><span class="v" id="s-seo">–</span><div class="meter" id="m-seo"></div><span class="legend" id="l-seo"></span></div>
+    <div class="sum"><span class="k">Tareas programador</span><span class="v" id="s-dev">–</span><div class="meter" id="m-dev"></div><span class="legend" id="l-dev"></span></div>
+  </section>
+
+  <div class="notice" id="notice">Cargando tareas…</div>
+
+  <div class="tabs" role="tablist" aria-label="Área">
+    <button class="tab" role="tab" id="tab-seo" aria-controls="panel" aria-selected="true" data-tab="seo">SEO <span class="count" id="c-seo">0</span></button>
+    <button class="tab" role="tab" id="tab-dev" aria-controls="panel" aria-selected="false" data-tab="dev">Programador <span class="count" id="c-dev">0</span></button>
+  </div>
+
+  <div class="toolbar" role="group" aria-label="Filtrar por estado">
+    <span>Mostrar:</span>
+    <button class="chip" data-f="todas" aria-pressed="true">Todas</button>
+    <button class="chip" data-f="pendiente" aria-pressed="false">Pendientes</button>
+    <button class="chip" data-f="proceso" aria-pressed="false">En proceso</button>
+    <button class="chip" data-f="completada" aria-pressed="false">Completadas</button>
+  </div>
+
+  <main id="panel" role="tabpanel" aria-labelledby="tab-seo"></main>
+
+  <footer>Prioridad alta: esta semana–2 semanas · media: este mes · baja: backlog. Tiempos orientativos. Documentos de referencia: Informe-SEO-CarterasDePiel, ACTION-PLAN.md y hoja «Estrategia SEO Santomar».</footer>
+</div>
+
+<script>
+(function () {
+  var TASKS = [];
+  var STATES = {};           // id -> {estado, updatedAt, updatedBy}
+  var NAMES = {};            // userId -> name
+  var db = null, user = null, canWrite = false;
+  var tab = (location.hash === "#programador") ? "dev" : "seo";
+  var filter = "todas";
+  var LABEL = { pendiente: "Pendiente", proceso: "En proceso", completada: "Completada" };
+  var PRIO = [["alta", "Prioridad alta"], ["media", "Prioridad media"], ["baja", "Prioridad baja"]];
+  var panel = document.getElementById("panel");
+  var notice = document.getElementById("notice");
+
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "text") n.textContent = attrs[k];
+      else if (k === "cls") n.className = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return n;
+  }
+  function stateOf(id) { return (STATES[id] && STATES[id].estado) || "pendiente"; }
+  function fmtDate(iso) {
+    try { return new Date(iso).toLocaleDateString("es-ES", { day: "numeric", month: "short" }); } catch (e) { return ""; }
+  }
+
+  function renderSummary() {
+    [["all", null], ["seo", "seo"], ["dev", "dev"]].forEach(function (p) {
+      var list = TASKS.filter(function (t) { return !p[1] || t.tipo === p[1]; });
+      var n = list.length, done = 0, proc = 0;
+      list.forEach(function (t) { var s = stateOf(t.id); if (s === "completada") done++; else if (s === "proceso") proc++; });
+      document.getElementById("s-" + p[0]).innerHTML = "";
+      document.getElementById("s-" + p[0]).append(String(done), el("small", { text: " / " + n + " completadas" }));
+      var m = document.getElementById("m-" + p[0]); m.innerHTML = "";
+      if (n) { m.append(el("span", { cls: "m-done", style: "width:" + (100 * done / n) + "%" }), el("span", { cls: "m-proc", style: "width:" + (100 * proc / n) + "%" })); }
+      document.getElementById("l-" + p[0]).textContent = "En proceso " + proc + " · Pendientes " + (n - done - proc);
+    });
+    document.getElementById("c-seo").textContent = TASKS.filter(function (t) { return t.tipo === "seo"; }).length;
+    document.getElementById("c-dev").textContent = TASKS.filter(function (t) { return t.tipo === "dev"; }).length;
+  }
+
+  function onChange(id, sel) {
+    var v = sel.value;
+    sel.setAttribute("data-v", v);
+    if (!db || !canWrite) return;
+    sel.disabled = true;
+    var body = { estado: v, updatedAt: new Date().toISOString() };
+    Promise.resolve(user ? user.id() : null).then(function (uid) {
+      if (uid) body.updatedBy = uid;
+      return db.collection("estados").doc(id).set(body);
+    }).then(function () {
+      sel.disabled = false;
+    }).catch(function (e) {
+      sel.disabled = false;
+      sel.value = stateOf(id); sel.setAttribute("data-v", sel.value);
+      notice.hidden = false;
+      notice.textContent = (e && (e.code === "permission_denied" || e.code === "not_granted"))
+        ? "No tienes permiso para cambiar estados en esta página. Pide acceso de edición al propietario."
+        : "No se pudo guardar el estado. Revisa la conexión y vuelve a intentarlo.";
+    });
+  }
+
+  function card(t) {
+    var s = stateOf(t.id);
+    var sel = el("select", { cls: "st", id: "st-" + t.id, "aria-label": "Estado de " + t.titulo, "data-v": s });
+    ["pendiente", "proceso", "completada"].forEach(function (v) {
+      var o = el("option", { value: v, text: LABEL[v] }); if (v === s) o.selected = true; sel.appendChild(o);
+    });
+    if (!db || !canWrite) sel.disabled = true;
+    sel.addEventListener("change", function () { onChange(t.id, sel); });
+    var info = STATES[t.id];
+    var who = el("div", { cls: "who" });
+    if (info && info.updatedAt) {
+      var nm = info.updatedBy && NAMES[info.updatedBy];
+      who.textContent = "Actualizado " + fmtDate(info.updatedAt) + (nm ? " por " + nm : "");
+    }
+    var steps = el("ol", { cls: "steps" }, t.pasos.map(function (p) { return el("li", { text: p }); }));
+    return el("article", { cls: "card " + t.prioridad + (s === "completada" ? " done" : "") }, [
+      el("div", { cls: "top" }, [
+        el("div", null, [el("h3", null, [el("span", { cls: "id", text: t.id.toUpperCase() }), t.titulo])]),
+        el("div", { cls: "status" }, [sel, who])
+      ]),
+      el("p", { cls: "desc", text: t.descripcion }),
+      el("div", { cls: "meta" }, [
+        el("span", null, ["Responsable: ", el("b", { text: t.responsable })]),
+        el("span", null, ["Tiempo estimado: ", el("b", { text: t.tiempo })]),
+        el("span", null, [el("span", { cls: "prio p-" + t.prioridad, text: t.prioridad })])
+      ]),
+      el("details", null, [
+        el("summary", { text: "Cómo hacerlo (" + t.pasos.length + " pasos)" }),
+        steps,
+        t.referencia ? el("div", { cls: "ref", text: "Referencia: " + t.referencia }) : null
+      ])
+    ]);
+  }
+
+  function render() {
+    document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.tab === tab ? "true" : "false"); });
+    panel.setAttribute("aria-labelledby", "tab-" + tab);
+    var open = {};
+    panel.querySelectorAll("details[open]").forEach(function (d) { var a = d.closest("article"); var s = a && a.querySelector("select"); if (s) open[s.id] = 1; });
+    panel.innerHTML = "";
+    PRIO.forEach(function (p) {
+      var list = TASKS.filter(function (t) { return t.tipo === tab && t.prioridad === p[0]; });
+      var shown = list.filter(function (t) { return filter === "todas" || stateOf(t.id) === filter; });
+      var lane = el("section", { cls: "lane" }, [
+        el("h2", null, [el("span", { cls: "prio p-" + p[0], text: p[0] }), p[1], el("span", { cls: "n", text: shown.length + " de " + list.length })])
+      ]);
+      if (!shown.length) lane.appendChild(el("div", { cls: "empty", text: list.length ? "Ninguna tarea con este estado." : "Sin tareas en esta prioridad." }));
+      shown.forEach(function (t) { var c = card(t); if (open["st-" + t.id]) c.querySelector("details").open = true; lane.appendChild(c); });
+      panel.appendChild(lane);
+    });
+    renderSummary();
+  }
+
+  document.querySelectorAll(".tab").forEach(function (b) {
+    b.addEventListener("click", function () { tab = b.dataset.tab; try { history.replaceState(null, "", tab === "dev" ? "#programador" : "#seo"); } catch (e) {} render(); });
+  });
+  window.addEventListener("hashchange", function () { tab = location.hash === "#programador" ? "dev" : "seo"; render(); });
+  document.querySelectorAll(".chip").forEach(function (b) {
+    b.addEventListener("click", function () {
+      filter = b.dataset.f;
+      document.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", c === b ? "true" : "false"); });
+      render();
+    });
+  });
+
+  function resolveNames() {
+    if (!user) return;
+    var ids = [];
+    for (var k in STATES) { var u = STATES[k].updatedBy; if (u && !(u in NAMES) && ids.indexOf(u) < 0) ids.push(u); }
+    if (!ids.length) return;
+    user.profiles(ids).then(function (ps) {
+      ids.forEach(function (id) { NAMES[id] = (ps && ps[id] && ps[id].name) || ""; });
+      render();
+    }).catch(function () {});
+  }
+
+  fetch("tasks.json").then(function (r) { return r.json(); }).then(function (data) {
+    TASKS = data;
+    notice.textContent = "Conectando con los estados guardados…";
+    render();
+  }).catch(function () {
+    notice.textContent = "No se pudieron cargar las tareas. Recarga la página.";
+  });
+
+  if (window.claude && window.claude.use) {
+    Promise.all([window.claude.use("db"), window.claude.use("user")]).then(function (r) {
+      db = r[0]; user = r[1];
+      if (!db) {
+        notice.textContent = "Modo lectura: inicia sesión en claude.ai para ver y cambiar el estado de las tareas.";
+        render(); return;
+      }
+      var p = user && user.can ? user.can("data.write") : null;
+      Promise.resolve(p).then(function (ok) { canWrite = ok !== false; render(); });
+      var timer = setTimeout(function () { notice.hidden = false; notice.textContent = "Los estados aún no responden; lo que ves puede no estar actualizado."; }, 10000);
+      db.collection("estados").onSnapshot(function (snap) {
+        var next = {};
+        snap.docs.forEach(function (d) { if (d.exists) next[d.id] = d.data(); });
+        STATES = next;
+        if (!snap.metadata.fromCache) { clearTimeout(timer); notice.hidden = true; }
+        render(); resolveNames();
+      }, function () {
+        clearTimeout(timer);
+        notice.hidden = false;
+        notice.textContent = "No se pudieron cargar los estados guardados. Recarga la página más tarde.";
+      });
+    });
+  } else {
+    notice.textContent = "Modo lectura: abre esta página en claude.ai para cambiar estados.";
+  }
+})();
+</script>
