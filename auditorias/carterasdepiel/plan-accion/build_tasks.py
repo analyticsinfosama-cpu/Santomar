@@ -15,15 +15,18 @@ t("dev-01","dev","alta","Desbloquear JS y CSS en robots.txt",
  "Importante: PrestaShop regenera robots.txt al pulsar «Generar robots.txt» en Preferencias > Tráfico; documentar el cambio para que no se pierda.",
  "Validar en Search Console > Inspección de URL > Probar URL publicada > Ver página probada (captura y recursos sin «bloqueado»)."],
  "Auditoría §3.1")
-t("dev-02","dev","alta","Resolver las categorías que dan 404",
- "/28-cinturones, /42-, /43-, /57- (cinturones), /44-tarjeteros-de-piel (19 enlaces del blog), /44-tarjetero-de-piel, /47-carteras-mujer-casual y /74-76 (rebajas) devuelven 404. La hoja de estrategia sigue asignando keywords a varias de ellas.",
- DEV,"3 h",[
- "Confirmar con el cliente si los cinturones siguen a la venta. Si sí: reactivar la categoría 28 y sus hijas (Catálogo > Categorías > activar) con sus productos.",
- "Si no hay stock: crear redirecciones 301 (módulo de redirecciones o .htaccess/nginx): /28-cinturones y /42-, /43-, /57- → /27-complementos.",
- "/44-tarjeteros-de-piel y /44-tarjetero-de-piel → 301 a la nueva categoría Tarjeteros (tarea seo-14) o, mientras tanto, a /73-carteras-hombre-piel-sin-monedero.",
- "/47-carteras-mujer-casual → 301 a /26-carteras-mujer. /74-, /75-, /76- → 301 a /69-outlet.",
- "Comprobar cada URL con curl -I: debe responder 301 en un solo salto hacia una URL 200."],
- "Auditoría §3.2")
+t("dev-02","dev","alta","Redirigir las categorías eliminadas desde el servidor",
+ "/28-cinturones, /42-, /43-, /57- (cinturones), /44-tarjeteros-de-piel (19 enlaces del blog), /44-tarjetero-de-piel, /47-carteras-mujer-casual y /74-76 (rebajas) acaban en 404. La redirección del módulo (p. ej. id 144: /28-cinturones → home) no se ejecuta: comprobado el 23/11/2026, estas URLs responden 302 → index.php?controller=404. Cuando la categoría ya no existe, el controlador de categorías de PrestaShop hace su propio 302 a la página 404 antes de que el módulo actúe. En productos el módulo sí funciona (301 verificados).",
+ DEV,"2 h",[
+ "No usar el módulo de redirecciones para categorías borradas: hay que redirigir en el servidor, antes de que la petición llegue a PrestaShop.",
+ "Si el servidor es nginx (cabecera «server: nginx»), añadir en el server block, antes del location de PrestaShop: location ~ ^/(28-cinturones|42-cinturon-hombre-clasico|43-cinturon-hombre-casual|57-cinturon-hombre-traje)/?$ { return 301 https://carterasdepiel.es/27-complementos; }",
+ "Añadir igual: ^/44-tarjeteros?-de-piel/?$ → nueva categoría Tarjeteros (seo-14) o, mientras tanto, /73-carteras-hombre-piel-sin-monedero; ^/47-carteras-mujer-casual/?$ → /26-carteras-mujer; ^/(74-rebaja-40|75-rebaja-30|76-rebaja-20)/?$ → /69-outlet.",
+ "Si nginx pasa las peticiones a Apache y el sitio usa .htaccess: poner las reglas RewriteRule ^28-cinturones/?$ https://carterasdepiel.es/27-complementos [R=301,L] ENCIMA del bloque «# ~~start~~» de PrestaShop, porque PrestaShop reescribe ese bloque al regenerar el .htaccess.",
+ "Destino: nunca la portada (Google trata una redirección a la home como soft 404). Si el cliente no va a volver a vender cinturones y no hay categoría equivalente, es mejor responder 410 (return 410;) que mandar a la home.",
+ "Desactivar las entradas del módulo que no funcionan (p. ej. id 144) para que no confundan, y corregir los destinos «https://carterasdepiel.es» sin barra final (provocan un salto extra).",
+ "Recargar nginx (nginx -t && systemctl reload nginx) y comprobar con curl -I https://carterasdepiel.es/28-cinturones: debe responder 301 en un solo salto hacia una URL que da 200.",
+ "Recordatorio: la redirección no sustituye corregir los enlaces internos del blog (tarea seo-04)."],
+ "Auditoría §3.2 · comprobación 23/11/2026")
 t("dev-03","dev","alta","Corregir el enlace global /37-casanova",
  "Un enlace presente en 240 páginas (cabecera o menú) apunta a /37-casanova, que encadena dos 301 hasta la portada.",
  DEV,"30 min",[
@@ -197,7 +200,8 @@ t("seo-04","seo","alta","Corregir los 50 enlaces rotos del blog",
  "Priorizar los artículos con tráfico: piel de vacuno vs ovino, hebillas de cinturones, tarjeteros minimalistas, últimas novedades en carteras de hombre, protección RFID.",
  "Sustituir cada enlace por el producto vigente equivalente o por su categoría.",
  "Los 19 enlaces a /44-tarjeteros-de-piel: cambiarlos a la nueva categoría de tarjeteros.",
- "Volver a rastrear y confirmar 0 enlaces internos a 404."],
+ "Aunque exista una redirección 301 en el módulo o en el servidor, cambiar igualmente el enlace a la URL final: cada redirección enlazada desperdicia rastreo y los enlaces a categorías borradas hoy siguen acabando en 404 (ver dev-02).",
+ "Volver a rastrear y confirmar 0 enlaces internos a 404 o a redirecciones."],
  "Auditoría §3.2")
 t("seo-05","seo","alta","Resolver la canibalización entre portada y categorías",
  "SerpReports muestra la portada posicionando para búsquedas de categoría: «carteras hombre» (22.200/mes, pos. 16), «carteras piel hombre» (3.600, pos. 15), «carteras pequeñas hombre» (880, pos. 12), «carteras piel mujer» (1.600, pos. 9), «monedero grande mujer» (390, pos. 11). Search Console registra 38 consultas en conflicto portada–categoría.",
