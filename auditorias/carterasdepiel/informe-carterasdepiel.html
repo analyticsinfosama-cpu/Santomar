@@ -1,0 +1,425 @@
+<title>Informe SEO carterasdepiel.es</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: columna de lectura de informe (~760px) con índice lateral en escritorio; identidad Infosama azul + verde */
+:root {
+  --bg: #f6f8f9;
+  --paper: #ffffff;
+  --fg: #2a2a2a;
+  --muted: #5f666c;
+  --line: #dde4e8;
+  --soft: #eef4f7;
+  --accent: #3b7d9c;
+  --accent-2: #8fc456;
+  --bad: #b8382a;
+  --warn: #a96a12;
+  --good: #4f7f22;
+  --bad-bg: #fbeceb;
+  --warn-bg: #fbf2e3;
+  --good-bg: #eef6e4;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a1d; --paper: #1b2327; --fg: #e6ebee; --muted: #a3adb3; --line: #2e3a40; --soft: #20303a;
+    --accent: #79b6d3; --accent-2: #a4d76c; --bad: #f08a7e; --warn: #e6b45f; --good: #a4d76c;
+    --bad-bg: #3a2120; --warn-bg: #3a2f1c; --good-bg: #24331b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a1d; --paper: #1b2327; --fg: #e6ebee; --muted: #a3adb3; --line: #2e3a40; --soft: #20303a;
+  --accent: #79b6d3; --accent-2: #a4d76c; --bad: #f08a7e; --warn: #e6b45f; --good: #a4d76c;
+  --bad-bg: #3a2120; --warn-bg: #3a2f1c; --good-bg: #24331b; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.62; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; }
+@media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; } nav.toc { display: none; } }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 13.5px; }
+nav.toc .lbl { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 11.5px; color: var(--muted); margin-bottom: 10px; }
+nav.toc ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+nav.toc a { color: var(--muted); text-decoration: none; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); }
+main { min-width: 0; max-width: 780px; }
+header.cover { display: grid; gap: 18px; padding-bottom: 28px; border-bottom: 3px solid var(--accent-2); margin-bottom: 8px; }
+.brand { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.brand .logo { background: #ffffff; border-radius: 8px; padding: 6px 10px; display: inline-flex; }
+.brand .logo img { height: 46px; width: auto; display: block; }
+.brand span { font-size: 13px; color: var(--muted); }
+.eyebrow { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 12px; color: var(--accent); }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 5vw, 2.9rem); line-height: 1.08; margin: 0; text-wrap: balance; }
+h1 .dom { color: var(--accent); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13.5px; color: var(--muted); }
+h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; line-height: 1.2; margin: 56px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--accent-2); text-wrap: balance; scroll-margin-top: 24px; }
+h2 .n { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 8px; }
+h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.12rem; margin: 30px 0 8px; }
+p { margin: 0 0 14px; }
+ul.list { margin: 0 0 16px; padding-left: 20px; display: grid; gap: 8px; }
+ul.list li::marker { color: var(--accent); }
+strong { font-weight: 600; }
+.score { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; margin: 18px 0 22px; }
+@media (max-width: 560px) { .score { grid-template-columns: minmax(0, 1fr); } }
+.score .big { font-family: var(--font-display); font-weight: 800; font-size: 4.6rem; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+.score .big small { font-size: 1.3rem; color: var(--muted); font-weight: 500; }
+.score .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-top: 6px; }
+.bars { display: grid; gap: 9px; }
+.bar { display: grid; grid-template-columns: minmax(0, 13.5em) minmax(0, 1fr) 2.4em; gap: 10px; align-items: center; font-size: 13.5px; }
+.bar .track { height: 9px; background: var(--soft); border-radius: 5px; overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 5px; }
+.bar .v { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; }
+.f-bad { background: var(--bad); } .f-warn { background: var(--warn); } .f-good { background: var(--good); }
+.bar .ctx { color: var(--muted); }
+.note { font-size: 13px; color: var(--muted); }
+figure { margin: 22px 0; }
+figure .paper { background: #ffffff; border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: center; }
+figure img { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+figcaption { font-size: 13px; color: var(--muted); text-align: center; margin-top: 8px; font-style: italic; }
+.tbl { overflow-x: auto; margin: 16px 0 22px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-family: var(--font-display); font-weight: 700; font-size: 12.5px; letter-spacing: .03em; color: var(--muted); background: var(--soft); padding: 10px 12px; border-bottom: 1px solid var(--line); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.me td { font-weight: 600; color: var(--accent); }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.p-bad { color: var(--bad); background: var(--bad-bg); } .p-warn { color: var(--warn); background: var(--warn-bg); } .p-good { color: var(--good); background: var(--good-bg); } .p-nd { color: var(--muted); background: var(--soft); }
+.crit { display: grid; gap: 12px; margin: 16px 0; padding: 0; list-style: none; }
+.crit li { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.crit li b { display: block; font-family: var(--font-display); font-weight: 700; margin-bottom: 2px; }
+code { font-family: var(--font-mono); font-size: .86em; background: var(--soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.method { background: var(--soft); border-radius: 10px; padding: 16px 20px; font-size: 14px; }
+.sev { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 16px; }
+.sev section { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; min-width: 0; }
+.sev h3 { margin-top: 0; display: flex; align-items: center; gap: 8px; }
+.sev ul { margin: 0; padding-left: 18px; font-size: 14px; display: grid; gap: 5px; }
+footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+footer .i { color: var(--accent); font-weight: 700; } footer .s { color: var(--accent-2); font-weight: 700; }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Índice">
+  <div class="lbl">Índice</div>
+  <ol>
+    <li><a href="#resumen">1. Resumen ejecutivo</a></li>
+    <li><a href="#autoridad">2. Autoridad y tráfico</a></li>
+    <li><a href="#tecnico">3. Diagnóstico técnico</a></li>
+    <li><a href="#schema">4. Datos estructurados</a></li>
+    <li><a href="#onpage">5. On-page y contenido</a></li>
+    <li><a href="#imagenes">6. Imágenes</a></li>
+    <li><a href="#eeat">7. Señales E-E-A-T</a></li>
+    <li><a href="#geo">8. Búsqueda con IA</a></li>
+    <li><a href="#competencia">9. Competencia</a></li>
+    <li><a href="#escala">10. Oportunidad de escala</a></li>
+    <li><a href="#sintesis">11. Síntesis</a></li>
+    <li><a href="#conclusion">12. Conclusión</a></li>
+    <li><a href="#metodologia">Metodología</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="cover">
+  <div class="brand"><span class="logo"><img src="img/logo-infosama.png" alt="Infosama, agencia SEO en Cádiz" width="121" height="46"></span><span>Documento de diagnóstico · Confidencial</span></div>
+  <div class="eyebrow">Informe SEO integral</div>
+  <h1><span class="dom">carterasdepiel.es</span><br>Casanova · Marroquinería artesanal de Ubrique</h1>
+  <div class="meta"><span>Fecha: 23 de noviembre de 2026</span><span>PrestaShop · tema Warehouse</span><span>500 URLs rastreadas</span></div>
+</header>
+
+<h2 id="resumen"><span class="n">1</span>Resumen ejecutivo</h2>
+<p>carterasdepiel.es es la tienda online de un fabricante de pequeña marroquinería de la Sierra de Cádiz (marca comercial Casanova, razón comercial Santomar). Vende carteras, monederos, tarjeteros y llaveros de piel de vacuno, con un catálogo activo de unas 60–70 referencias y un blog de más de 150 artículos.</p>
+<p>El proyecto tiene una base de contenido superior a la media del sector: categorías de 800 a 1.260 palabras, blog extenso, llms.txt publicado y preguntas frecuentes con datos estructurados. Mantiene unas 2.000 visitas orgánicas mensuales estimadas. Esa base convive con fallos técnicos de alto impacto: el robots.txt impide a Google descargar los JavaScript del tema, familias completas del catálogo devuelven error 404, el rendimiento móvil es muy lento y el perfil de enlaces ha recibido una oleada de spam en octubre y noviembre de 2026.</p>
+
+<div class="score">
+  <div>
+    <div class="big">49<small> / 100</small></div>
+    <div class="lbl">Puntuación SEO global</div>
+  </div>
+  <div class="bars" role="list" aria-label="Puntuación por área">
+    <div class="bar" role="listitem"><span>Contenido / E-E-A-T</span><span class="track"><span class="fill f-warn" style="width:55%;display:block"></span></span><span class="v">55</span></div>
+    <div class="bar" role="listitem"><span>On-page</span><span class="track"><span class="fill f-warn" style="width:55%;display:block"></span></span><span class="v">55</span></div>
+    <div class="bar" role="listitem"><span>Búsqueda con IA (GEO)</span><span class="track"><span class="fill f-warn" style="width:50%;display:block"></span></span><span class="v">50</span></div>
+    <div class="bar" role="listitem"><span>Técnico</span><span class="track"><span class="fill f-warn" style="width:48%;display:block"></span></span><span class="v">48</span></div>
+    <div class="bar" role="listitem"><span>Datos estructurados</span><span class="track"><span class="fill f-warn" style="width:45%;display:block"></span></span><span class="v">45</span></div>
+    <div class="bar" role="listitem"><span>Imágenes</span><span class="track"><span class="fill f-warn" style="width:45%;display:block"></span></span><span class="v">45</span></div>
+    <div class="bar" role="listitem"><span>Rendimiento (CWV)</span><span class="track"><span class="fill f-bad" style="width:30%;display:block"></span></span><span class="v">30</span></div>
+    <div class="bar" role="listitem"><span class="ctx">Competitividad*</span><span class="track"><span class="fill f-bad" style="width:25%;display:block"></span></span><span class="v">25</span></div>
+    <div class="bar" role="listitem"><span class="ctx">Autoridad*</span><span class="track"><span class="fill f-bad" style="width:15%;display:block"></span></span><span class="v">15</span></div>
+  </div>
+</div>
+<p class="note">La puntuación global pondera Técnico (22 %), Contenido (23 %), On-page (20 %), Datos estructurados (10 %), Rendimiento (10 %), GEO (10 %) e Imágenes (5 %). *Autoridad y Competitividad se muestran como contexto y no entran en la media.</p>
+
+<h3>Hallazgos críticos</h3>
+<ul class="crit">
+  <li><b>El robots.txt bloquea los JavaScript del tema y de los módulos</b>Afecta a <code>/themes/core.js</code>, <code>/themes/warehouse/assets/js/</code>, <code>/js/jquery/</code> y los scripts de 25 módulos. Google no puede renderizar la página tal como la ve el usuario.</li>
+  <li><b>Categorías completas en error 404</b>La categoría Cinturones (<code>/28-cinturones</code>) y sus subcategorías, y <code>/44-tarjeteros-de-piel</code>, enlazada desde 19 artículos del blog. Una línea de producto ha desaparecido del índice.</li>
+  <li><b>Rendimiento móvil muy deficiente</b>La imagen principal (LCP) tarda 7,8 s en la portada, 15,4 s en la categoría de hombre y 10,7 s en una ficha. Cada página hace más de 160 peticiones y descarga unos 4 MB.</li>
+  <li><b>Oleada de enlaces spam</b>El 65 % de los 200 enlaces muestreados procede de una red de subdominios «slots-online-machine.online» y de PBN, casi todos dofollow hacia la portada y detectados en octubre y noviembre de 2026.</li>
+  <li><b>Entidad de marca incoherente</b>Conviven «Santomar» y «Casanova», dos teléfonos distintos, dos ubicaciones del taller (Ubrique y El Bosque) y antigüedades de «más de 40» y «más de 50 años».</li>
+  <li><b>50 enlaces internos rotos</b>Además, un enlace presente en 240 páginas (<code>/37-casanova</code>) encadena dos redirecciones 301 hasta la portada.</li>
+</ul>
+
+<h2 id="autoridad"><span class="n">2</span>Autoridad y rendimiento orgánico</h2>
+<h3>Tráfico y visibilidad</h3>
+<p>Según DinoRANK, el dominio mantiene unas 2.000 visitas orgánicas mensuales estimadas a lo largo de 2025 y 2026, con un pico de 3.599 en marzo de 2026. En octubre de 2026 posiciona 105 palabras clave en España: 35 en el top 10 y solo 1 en el top 3.</p>
+<figure><div class="paper"><img src="img/08_trafico.png" alt="Gráfica de líneas del tráfico orgánico estimado entre mayo de 2025 y octubre de 2026, estable en torno a 2.000 visitas al mes con un pico de 3.599 en marzo de 2026" width="1210" height="560" loading="lazy"></div><figcaption>Evolución del tráfico orgánico estimado (DinoRANK).</figcaption></figure>
+<p>Search Console confirma esa estabilidad: entre 630 y 690 clics mensuales desde julio de 2026, sobre 76.000–85.000 impresiones, con un CTR medio del 0,8 % y una posición media entre 10,9 y 13,2. El dominio aparece mucho en Google pero convierte pocas apariciones en clics.</p>
+<div class="tbl"><table>
+  <thead><tr><th>URL (Search Console, últimos 90 días)</th><th class="num">Clics</th><th class="num">Impresiones</th><th class="num">Pos. media</th></tr></thead>
+  <tbody>
+    <tr><td>Portada</td><td class="num">180</td><td class="num">19.142</td><td class="num">25,4</td></tr>
+    <tr><td>/38-carteras-hombre</td><td class="num">127</td><td class="num">37.728</td><td class="num">15,5</td></tr>
+    <tr><td>Blog: piel de vacuno vs. piel de ovino</td><td class="num">49</td><td class="num">2.444</td><td class="num">7,5</td></tr>
+    <tr><td>/26-carteras-mujer</td><td class="num">42</td><td class="num">8.028</td><td class="num">19,7</td></tr>
+    <tr><td>/79-carteras-grandes-de-mujer</td><td class="num">38</td><td class="num">5.162</td><td class="num">8,1</td></tr>
+    <tr><td>/69-outlet</td><td class="num">36</td><td class="num">2.034</td><td class="num">21,9</td></tr>
+    <tr><td>/77-carteras-mujer-piel-pequenas</td><td class="num">4</td><td class="num">4.211</td><td class="num">16,2</td></tr>
+  </tbody>
+</table></div>
+<p class="note">Desde octubre de 2025 DinoRANK registra muchas menos palabras clave en las páginas 2 a 5 mientras el tráfico se mantiene. El patrón coincide con el cambio de Google de septiembre de 2025 en la paginación de resultados, que limita lo que las herramientas miden más allá del top 10, y no indica una pérdida real de posiciones.</p>
+
+<h3>Perfil de enlaces entrantes</h3>
+<p>DinoRANK registra 300 enlaces desde 215 dominios y asigna al dominio un LB Rank de 1,09, un valor bajo.</p>
+<figure><div class="paper"><img src="img/09_backlinks.png" alt="Gráfico de anillo: de 200 enlaces muestreados, 111 son de la red spam slots-online-machine, 19 de otros dominios spam o PBN y 70 legítimos" width="1038" height="484" loading="lazy"></div><figcaption>Composición de los 200 enlaces entrantes muestreados.</figcaption></figure>
+<ul class="list">
+  <li><strong>111 enlaces</strong> proceden de subdominios de una misma red, con anclas promocionales del tipo «De Confianza Colocación de Enlaces Contextuales para carterasdepiel.es…».</li>
+  <li><strong>19 enlaces más</strong> llegan de dominios de casinos, farmacia, cannabis o PBN.</li>
+  <li><strong>141 de los 200</strong> se detectaron en octubre y noviembre de 2026; el 99,5 % son dofollow y 199 apuntan a la portada. Es un patrón de spam automatizado o SEO negativo, ajeno a la actividad del propio sitio.</li>
+  <li><strong>Los enlaces legítimos son escasos</strong>: infosama.es, revi.io, usal.es y algunos medios y directorios.</li>
+</ul>
+
+<h2 id="tecnico"><span class="n">3</span>Diagnóstico técnico</h2>
+<div class="tbl"><table>
+  <thead><tr><th>Categoría</th><th>Estado</th><th>Observación</th></tr></thead>
+  <tbody>
+    <tr><td>Rastreabilidad (robots.txt)</td><td><span class="pill p-bad">Deficiente</span></td><td>Bloquea JS del tema y de 25 módulos</td></tr>
+    <tr><td>Indexabilidad</td><td><span class="pill p-warn">Mejorable</span></td><td>241 de 391 URLs HTML indexables; 25 sin canonical, portada incluida</td></tr>
+    <tr><td>Códigos de estado</td><td><span class="pill p-bad">Deficiente</span></td><td>61 URLs en 404, 104 redirecciones, 50 enlaces internos rotos</td></tr>
+    <tr><td>Sitemap XML</td><td><span class="pill p-warn">Mejorable</span></td><td>31 de 180 entradas no válidas; ~89 artículos del blog ausentes</td></tr>
+    <tr><td>Seguridad</td><td><span class="pill p-warn">Mejorable</span></td><td>HTTPS y redirecciones correctas; sin HSTS ni cabeceras de seguridad</td></tr>
+    <tr><td>Móvil</td><td><span class="pill p-warn">Mejorable</span></td><td>Diseño adaptable; zoom bloqueado y elementos táctiles pequeños</td></tr>
+    <tr><td>Core Web Vitals</td><td><span class="pill p-bad">Deficiente</span></td><td>LCP móvil 7,8–15,4 s; bloqueo del hilo principal 2–3 s</td></tr>
+    <tr><td>Renderizado JavaScript</td><td><span class="pill p-bad">Deficiente</span></td><td>49 scripts y 50 hojas de estilo por página</td></tr>
+  </tbody>
+</table></div>
+
+<h3>robots.txt y renderizado</h3>
+<p>La sección «Desautorización manual» del robots.txt bloquea, entre otros, <code>/themes/core.js</code>, <code>/themes/warehouse/assets/js/</code>, <code>/js/jquery/</code> y los JavaScript del megamenú, Creative Elements, las reseñas, el carrito y el blog. La regla genérica <code>Disallow: /modules/</code> bloquea también hojas de estilo de módulos. Google renderiza las páginas con un navegador y necesita esos recursos para ver el menú, los carruseles y los bloques de contenido; con estas reglas, la versión que procesa Googlebot difiere de la que ve el usuario. Ninguno de los competidores analizados aplica bloqueos de este tipo.</p>
+
+<h3>Errores 404 y redirecciones</h3>
+<div class="tbl"><table>
+  <thead><tr><th>URL</th><th>Respuesta</th><th>Enlaces internos</th></tr></thead>
+  <tbody>
+    <tr><td>/28-cinturones</td><td>404</td><td>11 (blog) + llms.txt</td></tr>
+    <tr><td>/42-, /43-, /57- (cinturones clásico, casual, traje)</td><td>302 → 404</td><td>2 cada una; en el sitemap</td></tr>
+    <tr><td>/44-tarjeteros-de-piel</td><td>404</td><td>19 artículos del blog</td></tr>
+    <tr><td>/47-carteras-mujer-casual</td><td>302 → 404</td><td>2; en el sitemap</td></tr>
+    <tr><td>/74-, /75-, /76- (rebajas 40, 30, 20 %)</td><td>302 → 404</td><td>En el sitemap y en llms.txt</td></tr>
+  </tbody>
+</table></div>
+<p>Hasta abril de 2026 estas URLs posicionaban para «correas de cuero para hombre», «cinturones de cuero» y «tarjetero de cuero». Su desaparición deja fuera del índice dos familias de producto con demanda contrastada («tarjeteros hombre» suma 6.600 búsquedas mensuales). Los productos descatalogados redirigen con un 302 temporal a la categoría padre, un tratamiento que Google suele interpretar como «soft 404».</p>
+
+<h3>Sitemap XML</h3>
+<figure><div class="paper"><img src="img/06_sitemap.png" alt="Barras: de 180 entradas del sitemap, 143 indexables correctas, 12 redirecciones, 10 URLs técnicas, 7 errores 404, 2 noindex y 6 duplicadas" width="1060" height="580" loading="lazy"></div><figcaption>Composición real del sitemap XML.</figcaption></figure>
+<p>El robots.txt declara <code>/2_index_sitemap.xml</code>, con un único sub-sitemap de 180 entradas; <code>/sitemap.xml</code> devuelve 404. Incluye 10 URLs técnicas de PrestaShop, 12 redirecciones, 7 errores 404, 2 páginas noindex y <code>/blog/news</code> repetida 7 veces. El rastreo encontró 146 artículos del blog frente a 57 en el sitemap.</p>
+
+<h3>Canonicalización y seguridad</h3>
+<p>Las URLs de combinación por color canonicalizan correctamente hacia la ficha principal, pero 25 URLs no declaran canonical, entre ellas la portada, «Nuestra historia» y contacto. Las landings <code>/content/8</code> a <code>/content/13</code> («Carteras de piel para hombre», «para mujer», «baratas»…) están en noindex. El sitio usa HTTPS con HTTP/2 y Brotli y consolida bien http:// y www., pero no envía HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy ni Content-Security-Policy. El tiempo de respuesta del servidor ronda 0,9–1,3 s.</p>
+
+<h3>Rendimiento (laboratorio, móvil de gama media)</h3>
+<div class="tbl"><table>
+  <thead><tr><th>Página</th><th class="num">FCP</th><th class="num">LCP</th><th class="num">Bloqueo hilo</th><th class="num">CLS</th><th class="num">Peticiones</th></tr></thead>
+  <tbody>
+    <tr><td>Portada</td><td class="num">4,6 s</td><td class="num"><span class="pill p-bad">7,8 s</span></td><td class="num">2,8 s</td><td class="num"><span class="pill p-good">0,005</span></td><td class="num">167</td></tr>
+    <tr><td>/38-carteras-hombre</td><td class="num">4,5 s</td><td class="num"><span class="pill p-bad">15,4 s</span></td><td class="num">3,2 s</td><td class="num"><span class="pill p-good">0,026</span></td><td class="num">157</td></tr>
+    <tr><td>Ficha de producto</td><td class="num">3,8 s</td><td class="num"><span class="pill p-bad">10,7 s</span></td><td class="num">2,0 s</td><td class="num"><span class="pill p-good">0,029</span></td><td class="num">167</td></tr>
+  </tbody>
+</table></div>
+<p>Umbrales de Google: LCP ≤ 2,5 s y CLS ≤ 0,1. En escritorio el LCP baja a 3,7–5,4 s, todavía por encima del umbral. Las causas principales son 49 scripts y más de 50 hojas de estilo sin agrupar, y entre 58 y 76 peticiones a terceros (dos propiedades de Google Analytics 4, Tag Manager, Píxel de Meta, reCAPTCHA, WhatsApp, Google Translate, Revolution Slider). El elemento LCP es siempre un JPEG: el banner de Black Friday (115 KB) en portada y una miniatura de 159 KB en las categorías.</p>
+
+<h2 id="schema"><span class="n">4</span>Datos estructurados</h2>
+<div class="tbl"><table>
+  <thead><tr><th>Tipo de página</th><th>Marcado detectado</th><th>Estado</th></tr></thead>
+  <tbody>
+    <tr><td>Portada</td><td>Organization, WebSite + SearchAction, LeatherGoodsStore (×2), FAQPage</td><td><span class="pill p-warn">Mejorable</span></td></tr>
+    <tr><td>Categorías</td><td>Organization, FAQPage (6 de 14), BreadcrumbList</td><td><span class="pill p-warn">Mejorable</span></td></tr>
+    <tr><td>Fichas de producto</td><td>Product + Offer + Brand (JSON-LD y microdatos)</td><td><span class="pill p-warn">Mejorable</span></td></tr>
+    <tr><td>Blog</td><td>BlogPosting, Person, ImageObject</td><td><span class="pill p-warn">Mejorable</span></td></tr>
+    <tr><td>Contacto / Historia</td><td>Solo Organization</td><td><span class="pill p-bad">Deficiente</span></td></tr>
+  </tbody>
+</table></div>
+<ul class="list">
+  <li><strong>Entidad duplicada.</strong> Dos bloques LeatherGoodsStore idénticos con el mismo identificador, y un bloque Organization con el nombre «Santomar», identificador relativo y logo distinto.</li>
+  <li><strong>Datos de contacto contradictorios.</strong> El marcado declara +34 956 46 09 92 y una dirección en el polígono de Ubrique; la página de contacto muestra +34 956 71 60 67 y la historia sitúa el taller en El Bosque.</li>
+  <li><strong>Producto sin valoraciones.</strong> El módulo de reseñas revi está instalado, pero ninguna ficha incluye valoraciones en el marcado, así que no pueden mostrarse estrellas en Google. pieldeubrique.com sí las muestra.</li>
+  <li><strong>Producto sin envíos ni devoluciones.</strong> Faltan los datos de envío y de política de devolución, aunque la tienda ofrece envío gratis desde 20 € y devoluciones en 30 días.</li>
+  <li><strong>Marca y doble marcado.</strong> La marca figura como «Santomar» y cada ficha repite Product en JSON-LD y en microdatos con valores distintos.</li>
+  <li><strong>Blog.</strong> Autor vacío, fechas fuera del formato ISO 8601 y un recuento de palabras erróneo (6.857 declaradas frente a 1.166 reales).</li>
+</ul>
+
+<h2 id="onpage"><span class="n">5</span>On-page y contenido</h2>
+<div class="tbl"><table>
+  <thead><tr><th>Elemento (241 URLs indexables)</th><th>Resultado</th><th>Estado</th></tr></thead>
+  <tbody>
+    <tr><td>H1 único por página</td><td>100 %</td><td><span class="pill p-good">Correcto</span></td></tr>
+    <tr><td>Titles de más de 60 caracteres</td><td>91 (38 %)</td><td><span class="pill p-warn">Mejorable</span></td></tr>
+    <tr><td>Sin meta description</td><td>21</td><td><span class="pill p-warn">Mejorable</span></td></tr>
+    <tr><td>Descripciones de plantilla repetidas</td><td>25 o más («lll➤ …»)</td><td><span class="pill p-warn">Mejorable</span></td></tr>
+    <tr><td>H1 en inglés en el blog</td><td>19 páginas («Blog - whats new?», «News»)</td><td><span class="pill p-bad">Deficiente</span></td></tr>
+  </tbody>
+</table></div>
+<p>Los títulos de producto siguen el patrón «【 NOMBRE 】▷ MODELO» y las descripciones empiezan por «lll➤». Google reescribe a menudo estos títulos y el formato resta credibilidad a una marca artesanal. El CTR medio del 0,8 % con posición media cercana a 11 indica que los fragmentos no captan el clic.</p>
+<h3>Canibalización e intención de búsqueda</h3>
+<p>Search Console registra 247 consultas en las que dos o más URLs del sitio compiten entre sí; en 38 compiten la portada y una categoría. La portada posiciona para «carteras hombre piel» (3.600 búsquedas al mes) o «carteras de piel mujer» (1.000), mientras las categorías quedan por detrás. Google premia en esas búsquedas páginas de categoría de tiendas especializadas, no portadas de marca con banner promocional.</p>
+<h3>Calidad del contenido</h3>
+<div class="tbl"><table>
+  <thead><tr><th>Tipo de página</th><th class="num">URLs</th><th class="num">Palabras (mediana)</th><th class="num">&lt; 300 palabras</th></tr></thead>
+  <tbody>
+    <tr><td>Categorías</td><td class="num">14</td><td class="num">1.263</td><td class="num">0</td></tr>
+    <tr><td>Fichas de producto</td><td class="num">60</td><td class="num">327</td><td class="num">24 (40 %)</td></tr>
+    <tr><td>Blog</td><td class="num">154</td><td class="num">902</td><td class="num">5</td></tr>
+    <tr><td>Páginas de sistema</td><td class="num">8</td><td class="num">37</td><td class="num">8</td></tr>
+  </tbody>
+</table></div>
+<p>Categorías y blog superan en extensión a la mayoría de competidores. Las fichas comparten estructuras casi idénticas entre modelos y hay fichas duplicadas del mismo modelo con IDs distintos (BENITO, CUBE, PANA). El blog repite temas (cinco artículos sobre RFID) y alterna temas de producto con otros alejados del catálogo.</p>
+
+<h2 id="imagenes"><span class="n">6</span>Optimización de imágenes</h2>
+<figure><div class="paper"><img src="img/07_imagenes.png" alt="Barras del peso de imágenes: logo 6 KB, ficha 24 KB, banner escritorio 92 KB, banner móvil 115 KB, miniatura de listado 159 KB" width="1120" height="520" loading="lazy"></div><figcaption>Peso real servido de imágenes representativas, todas en JPEG.</figcaption></figure>
+<ul class="list">
+  <li><strong>Texto alternativo:</strong> 2.775 de 7.347 imágenes rastreadas (38 %) no tienen alt; en las galerías de producto se trunca o queda vacío a partir de la segunda foto.</li>
+  <li><strong>Formatos:</strong> todo se sirve en JPEG o PNG, aunque el navegador acepte WebP o AVIF.</li>
+  <li><strong>Dimensiones:</strong> el 31 % de las imágenes no declara ancho y alto.</li>
+  <li><strong>Tamaños:</strong> los listados cargan la variante de zoom (159 KB) como miniatura.</li>
+  <li><strong>Imagen social:</strong> la imagen para redes es el logotipo en JPEG de 5,8 KB.</li>
+</ul>
+
+<h2 id="eeat"><span class="n">7</span>Señales E-E-A-T</h2>
+<div class="tbl"><table>
+  <thead><tr><th>Señal</th><th>Estado</th><th>Observación</th></tr></thead>
+  <tbody>
+    <tr><td>Experiencia</td><td><span class="pill p-good">Correcto</span></td><td>Historia familiar real desde 1981, taller propio y proceso artesanal</td></tr>
+    <tr><td>Pericia</td><td><span class="pill p-warn">Mejorable</span></td><td>Blog extenso sin autor identificado</td></tr>
+    <tr><td>Autoridad</td><td><span class="pill p-bad">Deficiente</span></td><td>Pocas menciones independientes; enlaces dominados por spam</td></tr>
+    <tr><td>Confianza</td><td><span class="pill p-warn">Mejorable</span></td><td>Envíos, devoluciones y garantía visibles; datos de contacto contradictorios</td></tr>
+  </tbody>
+</table></div>
+<p>«Nuestra historia» es el mayor activo de confianza del sitio: el relato de Miguel sobre el taller que sus padres fundaron en 1981 en El Bosque. Esa autoría no llega al blog, que se publica sin firma. La página de contacto tiene 29 palabras, sin dirección física ni horario, y no se han encontrado reseñas de Casanova o Santomar en plataformas externas.</p>
+
+<h2 id="geo"><span class="n">8</span>Visibilidad en buscadores con IA</h2>
+<div class="tbl"><table>
+  <thead><tr><th>Factor</th><th>Estado</th><th>Observación</th></tr></thead>
+  <tbody>
+    <tr><td>Acceso de rastreadores IA</td><td><span class="pill p-good">Correcto</span></td><td>GPTBot, ClaudeBot, PerplexityBot y Google-Extended permitidos</td></tr>
+    <tr><td>llms.txt</td><td><span class="pill p-warn">Mejorable</span></td><td>Publicado; enlaza /28-cinturones (404) e incluye una lista de 70 palabras clave</td></tr>
+    <tr><td>Contenido citable</td><td><span class="pill p-good">Correcto</span></td><td>FAQ marcadas y guías comparativas con datos concretos</td></tr>
+    <tr><td>Entidad reconocible</td><td><span class="pill p-bad">Deficiente</span></td><td>Dos nombres de marca y datos de contacto contradictorios</td></tr>
+    <tr><td>Menciones externas</td><td><span class="pill p-bad">Deficiente</span></td><td>Sin presencia detectada en medios o foros</td></tr>
+    <tr><td>Seguimiento de prompts</td><td><span class="pill p-nd">Sin datos</span></td><td>No hay prompts de IA monitorizados</td></tr>
+  </tbody>
+</table></div>
+<p>carterasdepiel.es es el único sitio del grupo analizado con llms.txt, y su contenido informativo sobre pieles, RFID y cuidado del cuero es el tipo de pasaje que citan los asistentes de IA. El freno principal es la identidad: «Santomar», «Casanova» y «Carteras de Piel» se leen como tres nombres, con dos teléfonos y dos localidades.</p>
+
+<h2 id="competencia"><span class="n">9</span>Competidores y análisis de deficiencias</h2>
+<p>Se han analizado los sitios que comparten resultados con el dominio para «carteras de piel» y «cartera piel hombre».</p>
+<figure><div class="paper"><img src="img/03_autoridad.png" alt="Barras de tráfico orgánico estimado en octubre de 2026: carterasdepiel.es 2.059, pielini.com 4.241, daviletto.es 7.087, monpiel.com 29.743, pieldeubrique.com 55.913" width="1210" height="590" loading="lazy"></div><figcaption>Tráfico orgánico mensual estimado (DinoRANK, octubre de 2026).</figcaption></figure>
+<div class="tbl"><table>
+  <thead><tr><th>Dominio</th><th class="num">Tráfico est.</th><th class="num">Keywords</th><th class="num">Top 3</th><th class="num">Top 10</th></tr></thead>
+  <tbody>
+    <tr class="me"><td>carterasdepiel.es</td><td class="num">2.059</td><td class="num">105</td><td class="num">1</td><td class="num">35</td></tr>
+    <tr><td>pieldeubrique.com</td><td class="num">55.913</td><td class="num">274</td><td class="num">120</td><td class="num">193</td></tr>
+    <tr><td>monpiel.com</td><td class="num">29.743</td><td class="num">253</td><td class="num">73</td><td class="num">177</td></tr>
+    <tr><td>daviletto.es</td><td class="num">7.087</td><td class="num">146</td><td class="num">12</td><td class="num">64</td></tr>
+    <tr><td>pielini.com</td><td class="num">4.241</td><td class="num">64</td><td class="num">6</td><td class="num">15</td></tr>
+  </tbody>
+</table></div>
+<figure><div class="paper"><img src="img/04_matriz.png" alt="Matriz de presencia de elementos SEO en carterasdepiel, pieldeubrique, monpiel y daviletto" width="1000" height="730" loading="lazy"></div><figcaption>Presencia de elementos SEO clave frente a la competencia.</figcaption></figure>
+<h3>Búsquedas en las que no aparece</h3>
+<div class="tbl"><table>
+  <thead><tr><th>Palabra clave</th><th class="num">Volumen/mes</th><th>Competidor (posición)</th></tr></thead>
+  <tbody>
+    <tr><td>cartera hombre</td><td class="num">27.100</td><td>pieldeubrique (5), monpiel (10)</td></tr>
+    <tr><td>tarjeteros hombre</td><td class="num">6.600</td><td>pielini (6)</td></tr>
+    <tr><td>billeteros mujer</td><td class="num">2.400</td><td>pielini (7)</td></tr>
+    <tr><td>carteras pequeñas hombre</td><td class="num">1.900</td><td>pielini (6)</td></tr>
+    <tr><td>carteras y monederos mujer</td><td class="num">1.600</td><td>pielini (5)</td></tr>
+    <tr><td>carteras personalizadas</td><td class="num">1.000</td><td>pieldeubrique (3), monpiel (5)</td></tr>
+    <tr><td>cartera hombre personalizada</td><td class="num">880</td><td>monpiel (3)</td></tr>
+  </tbody>
+</table></div>
+<h3>Búsquedas al alcance</h3>
+<div class="tbl"><table>
+  <thead><tr><th>Palabra clave</th><th class="num">Volumen</th><th class="num">Posición</th><th>URL actual</th></tr></thead>
+  <tbody>
+    <tr><td>cartera piel hombre</td><td class="num">3.600</td><td class="num">5</td><td>/38-carteras-hombre</td></tr>
+    <tr><td>monedero hombre</td><td class="num">2.900</td><td class="num">12</td><td>/38-carteras-hombre</td></tr>
+    <tr><td>cartera hombre pequeña</td><td class="num">2.400</td><td class="num">7</td><td>/38-carteras-hombre</td></tr>
+    <tr><td>cartera piel mujer</td><td class="num">1.900</td><td class="num">15</td><td>Portada</td></tr>
+    <tr><td>cartera hombre con monedero</td><td class="num">1.600</td><td class="num">19</td><td>/38-carteras-hombre</td></tr>
+    <tr><td>carteras mujer</td><td class="num">14.800</td><td class="num">25</td><td>/26-carteras-mujer</td></tr>
+    <tr><td>monederos mujer</td><td class="num">12.100</td><td class="num">29</td><td>/26-carteras-mujer</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="escala"><span class="n">10</span>Contenido y oportunidad de escala</h2>
+<p>El catálogo se organiza por sexo y tamaño, y los modelos llevan nombres de ciudades españolas (Córdoba, Jaén, Huelva, Salamanca…) en varios colores. No existen páginas para atributos con demanda propia: protección RFID, cartera americana, tarjetero, monedero de tacón o color. Tampoco hay una página de regalo de empresa más allá de la de venta al por mayor, que ya ocupa la 4.ª posición para «carteras al por mayor». La personalización con grabado, presente en los dos líderes, es la oportunidad de mayor volumen detectada. El blog tiene volumen para organizarse en grupos temáticos, pero hoy funciona como un archivo cronológico con títulos que compiten entre sí.</p>
+
+<h2 id="sintesis"><span class="n">11</span>Síntesis de deficiencias por impacto</h2>
+<figure><div class="paper"><img src="img/05_severidad.png" alt="Anillo con 28 hallazgos: 6 críticos, 8 de prioridad alta, 9 de prioridad media y 5 de impacto bajo" width="809" height="550" loading="lazy"></div><figcaption>Distribución de los 28 hallazgos por nivel de severidad.</figcaption></figure>
+<div class="sev">
+  <section><h3><span class="pill p-bad">Crítico</span> 6 hallazgos</h3><ul>
+    <li>JavaScript del tema y de los módulos bloqueados en robots.txt.</li>
+    <li>Categorías de cinturones y tarjeteros en error 404.</li>
+    <li>LCP móvil de 7,8 a 15,4 s y más de 160 peticiones.</li>
+    <li>Oleada de enlaces spam (65 % del perfil muestreado).</li>
+    <li>Entidad de marca incoherente.</li>
+    <li>50 enlaces internos rotos y enlace global con doble 301.</li>
+  </ul></section>
+  <section><h3><span class="pill p-warn">Alto</span> 8 hallazgos</h3><ul>
+    <li>Sitemap con 31 entradas no válidas y artículos ausentes.</li>
+    <li>Descatalogados con redirección 302 (soft 404).</li>
+    <li>Canibalización portada–categoría en 38 consultas.</li>
+    <li>Product sin valoraciones, envíos ni devoluciones.</li>
+    <li>LeatherGoodsStore duplicado y Organization relativo.</li>
+    <li>Portada y 24 URLs más sin canonical.</li>
+    <li>Titles largos o de plantilla; CTR del 0,8 %.</li>
+    <li>Sin cabeceras de seguridad.</li>
+  </ul></section>
+  <section><h3><span class="pill p-nd">Medio</span> 9 hallazgos</h3><ul>
+    <li>38 % de imágenes sin alt y sin WebP/AVIF.</li>
+    <li>Blog sin autor y con fechas no ISO.</li>
+    <li>H1 en inglés en 19 listados del blog.</li>
+    <li>40 % de fichas con menos de 300 palabras y fichas duplicadas.</li>
+    <li>Zoom bloqueado y elementos táctiles pequeños.</li>
+    <li>Scripts de terceros duplicados en cada página.</li>
+    <li>Contacto sin dirección ni horario.</li>
+    <li>Landings de contenido en noindex.</li>
+    <li>Blog sin grupos temáticos.</li>
+  </ul></section>
+  <section><h3><span class="pill p-good">Bajo</span> 5 hallazgos</h3><ul>
+    <li>Meta keywords obsoleta y meta robots duplicada.</li>
+    <li>Páginas de sistema vacías indexables.</li>
+    <li>llms.txt con enlaces rotos y lista de keywords.</li>
+    <li>/sitemap.xml estándar inexistente.</li>
+    <li>Imagen social basada en el logotipo.</li>
+  </ul></section>
+</div>
+
+<h2 id="conclusion"><span class="n">12</span>Conclusión</h2>
+<p>carterasdepiel.es tiene lo que a muchos competidores les falta: una historia de fabricante real, un blog de más de 150 artículos, categorías con contenido extenso y un llms.txt pensado para la búsqueda con IA. Por eso, con una autoridad baja, mantiene unas 2.000 visitas orgánicas mensuales y posiciones de primera página para búsquedas como «cartera piel hombre» o «piel de ubrique».</p>
+<p>Ese contenido no rinde lo que podría por razones mayoritariamente técnicas: Google no renderiza la página completa, líneas de producto enteras han salido del índice, el rendimiento móvil está lejos de los umbrales y la marca se presenta con identidades contradictorias. A ello se suma un perfil de enlaces contaminado recientemente por spam.</p>
+<p>La distancia con pieldeubrique.com y monpiel.com es grande en tráfico, no en calidad de contenido. El mayor margen está en tres áreas: el saneamiento técnico (rastreo, errores 404, sitemap y rendimiento), la unificación de la marca y el aprovechamiento de las posiciones 5 a 20 en búsquedas de alto volumen que ya están al alcance.</p>
+
+<h2 id="metodologia">Metodología</h2>
+<div class="method">
+  <p><strong>Fuentes.</strong> Rastreo propio de 500 URLs el 23/11/2026 (portada, robots.txt, sitemap, llms.txt, 25 categorías, 221 URLs de producto, 160 del blog y páginas corporativas); Google Search Console vía DinoRANK (mayo–noviembre de 2026); visibilidad, tráfico estimado, canibalizaciones, enlaces entrantes y análisis de brechas de DinoRANK; mediciones de rendimiento con Chromium emulando un móvil de gama media con 4G lenta.</p>
+  <p style="margin:0"><strong>Limitaciones.</strong> La API de PageSpeed Insights no respondió por límite de uso, así que las métricas de Core Web Vitals son de laboratorio y no datos reales de usuarios. El tráfico de competidores es una estimación de herramienta. No se ha tenido acceso a Google Analytics ni a la ficha de Google Business Profile.</p>
+</div>
+
+<footer>Documento elaborado por <span class="i">INFO</span><span class="s">SAMA</span> · Agencia SEO en Cádiz · 23 de noviembre de 2026</footer>
+</main>
+</div>
