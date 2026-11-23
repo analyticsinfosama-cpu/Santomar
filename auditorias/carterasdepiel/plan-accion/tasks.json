@@ -343,7 +343,7 @@
  {
   "id": "seo-03",
   "tipo": "seo",
-  "prioridad": "alta",
+  "prioridad": "baja",
   "titulo": "Reasignar en la hoja de estrategia las keywords de URLs muertas",
   "descripcion": "La hoja «Estrategia SEO Santomar» asigna keywords a URLs que hoy dan 404 o redirigen: /47-carteras-mujer-casual, /44-tarjetero-de-piel, /28-cinturones, /57-cinturon-hombre-traje, /45-monederos-de-piel, /79-carteras-mujer-piel-grandes, /2-inicio.",
   "responsable": "Equipo SEO (Infosama)",

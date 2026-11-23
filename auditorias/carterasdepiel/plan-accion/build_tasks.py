@@ -180,7 +180,7 @@ t("seo-02","seo","alta","Unificar nombre, dirección y teléfono de la marca",
  "Pasar los datos al programador para el schema (dev-10).",
  "Revisar y corregir la ficha de Google Business Profile, Facebook, Instagram y directorios (proveedores.com, etc.)."],
  "Auditoría §4 y §7")
-t("seo-03","seo","alta","Reasignar en la hoja de estrategia las keywords de URLs muertas",
+t("seo-03","seo","baja","Reasignar en la hoja de estrategia las keywords de URLs muertas",
  "La hoja «Estrategia SEO Santomar» asigna keywords a URLs que hoy dan 404 o redirigen: /47-carteras-mujer-casual, /44-tarjetero-de-piel, /28-cinturones, /57-cinturon-hombre-traje, /45-monederos-de-piel, /79-carteras-mujer-piel-grandes, /2-inicio.",
  SEO,"3 h",[
  "Pestaña «Cartera Mujer»: mover «monederos de piel mujer», «carteras mujer piel ubrique», «monedero de cuero mujer» y «billeteros señora» de /47 a /26-carteras-mujer; las de grandes a /79-carteras-grandes-de-mujer.",
